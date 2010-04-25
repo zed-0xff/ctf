@@ -33,9 +33,8 @@ def push word
 end
 
 def pop
-  r = @prg.get_word(@sp)
   @sp += 2
-  r
+  @prg.get_word(@sp)
 end
 
 @prg << 0 while @prg.size < 0x12004
@@ -160,8 +159,8 @@ while !@stop
       @pos += 2
     when 0x23:
       @pos += 1
-      bp = pop
-      sp = pop
+      @bp = pop
+      @sp = pop
       printf "pop bp,sp"
     when 0x24:
       @pos += 1
