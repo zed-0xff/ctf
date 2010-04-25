@@ -37,9 +37,9 @@ def pop
   @prg.get_word(@sp)
 end
 
-@prg << 0 while @prg.size < 0x12004
+@prg << 0 while @prg.size < 0x0f000
 
-@sp = @bp = 0x12000
+@sp = @bp = 0x0e000
 
 def @prg.store_word(ptr, word)
   self[ptr]   = word & 0xff
@@ -54,12 +54,24 @@ end
 output = ""
 @stop = false
 
+def dump_stack
+  printf "== SP: "
+  pos = @sp
+  4.times do
+    break if pos >= 0x0e000
+    pos += 2
+    printf "%04x ", mem.get_word(pos)
+  end
+  puts
+end
+
 begin
 
 while !@stop
   raise "no prg" if !@prg || @prg.size == 0
 
   b = @prg[@pos]
+  #dump_stack
   printf "pos=%04x sp=%05x b=%02x\t",@pos,@sp,b
   case b
     when 0:
@@ -150,10 +162,11 @@ while !@stop
     when 0x22:
       @pos += 1
       printf "t1=bp; t2=sp; bp=sp; sp -= %04x; push t2,t1",arg
+      v = arg
       t1 = @bp
       t2 = @sp
       @bp = @sp
-      @sp -= arg
+      @sp -= v
       push t2
       push t1
       @pos += 2
@@ -191,7 +204,7 @@ ensure
 puts
 puts
 (0x9000...0x10000).each do |addr|
-  printf("mem[%04x] = %04x (%4d)\n", addr,mem[addr],mem[addr]) if mem[addr] != 0
+  printf("mem[%04x] = %04x (%4d)\n", addr,mem[addr],mem[addr]) if mem[addr].to_i != 0
 end
 print "out = #{output.inspect}"
 end
