@@ -54,10 +54,13 @@ end
 output = ""
 @stop = false
 
-mem[0x8000] = 'q'
-mem[0x8001] = 'w'
-mem[0x8002] = 'e'
-mem[0x8003] = 'r'
+if ARGV[2]
+  ptr = 0x8000
+  ARGV[2].each_byte do |b|
+    mem[ ptr ] = b
+    ptr += 1
+  end
+end
 
 def dump_stack
   printf "== SP: "
