@@ -54,6 +54,11 @@ end
 output = ""
 @stop = false
 
+mem[0x8000] = 'q'
+mem[0x8001] = 'w'
+mem[0x8002] = 'e'
+mem[0x8003] = 'r'
+
 def dump_stack
   printf "== SP: "
   pos = @sp
@@ -193,8 +198,8 @@ while !@stop
       @pos += 2
     when 0x23:
       @pos += 1
-      @bp = pop
-      @sp = pop
+      @bp = pop if do_run
+      @sp = pop if do_run
       printf "pop bp,sp"
     when 0x24:
       @pos += 1
