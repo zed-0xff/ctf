@@ -73,10 +73,23 @@ def dump_stack
   puts
 end
 
+def dump_mem ptr
+  printf "%04x: ", ptr
+  8.times do
+    printf "%04x ",mem.get_word(ptr)
+    ptr += 2
+  end
+  puts
+end
+
 begin
 
 while !@stop
   raise "no prg" if !@prg || @prg.size == 0
+
+  if ARGV.first == 'fact' && @pos == 0x85 && !do_run
+    @pos = 0x90
+  end
 
   b = @prg[@pos]
   #dump_stack
@@ -90,12 +103,14 @@ while !@stop
     when 1:
       @pos += 1
       printf "mov [%04x], [%04x]",arg,arg(1)
+      printf "\t\t\t(%x)", mem.get_word(arg(1))
       mem.store_word(arg, mem.get_word(arg(1))) if do_run
       #mem[arg] = mem[arg(1)]
       @pos += 4
     when 2:
       @pos += 1
-      printf "add [%04x] (%4d), [%04x] (%4d)",arg,arg(1),  mem.get_word(arg), mem.get_word(arg(1))
+      printf "add [%04x], [%04x]",arg,arg(1)
+      printf "\t\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1))
       #printf("\n\t\t\t%04x",mem.get_word(arg))
       mem.store_word(arg, mem.get_word(arg) + mem.get_word(arg(1))) if do_run
       #printf("\n\t\t\t%04x",mem.get_word(arg))
@@ -103,15 +118,13 @@ while !@stop
     when 3:
       @pos += 1
       printf "[%04x] -= [%04x]", arg, arg(1)
+      printf "\t\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1))
       mem.store_word(arg, mem.get_word(arg) - mem.get_word(arg(1))) if do_run
       @pos += 4
     when 4:
       @pos += 1
-      printf "[%04x] *= [%04x]", arg, arg(1)
-      printf "\n\t\t\t mul %04x * %04x = %04x", 
-        mem.get_word(arg), 
-        mem.get_word(arg(1)), 
-        mem.get_word(arg) * mem.get_word(arg(1))
+      printf "mul [%04x], [%04x]", arg, arg(1)
+      printf "\t\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1))
       mem.store_word(arg, mem.get_word(arg) * mem.get_word(arg(1))) if do_run
       @pos += 4
     when 5:
@@ -125,6 +138,9 @@ while !@stop
     when 6:
       @pos += 1
       printf "goto %04x if [%04x] == [%04x]",arg,arg(1),arg(2)
+      printf "\t\t(%x, %x) %s", mem.get_word(arg(1)), mem.get_word(arg(2)), 
+        mem.get_word(arg(1)) == mem.get_word(arg(2)) ? "JUMP" : ""
+
       if mem.get_word(arg(1)) == mem.get_word(arg(2)) && do_run
         @pos = arg 
       else
@@ -140,7 +156,8 @@ while !@stop
       end
     when 8:
       @pos += 1
-      printf "goto %04x if [%04x] < [%04x]",arg,arg(1),arg(2)
+      printf "goto %04x if [%04x] < [%04x]\t\t(%x, %x)",arg,arg(1),arg(2),
+        mem.get_word(arg(1)), mem.get_word(arg(2))
       if mem.get_word(arg(1)) < mem.get_word(arg(2)) && do_run
         @pos = arg 
       else
@@ -157,7 +174,7 @@ while !@stop
       end
     when 0x0a
       @pos += 1
-      printf "ret"
+      printf "ret\n"
       if do_run
         @pos = pop
       end
@@ -211,21 +228,15 @@ while !@stop
       @pos += 2
     when 0x25:
       @pos += 1
-      printf "?ptr [%04x], [[%04x]] (%5d)",arg,arg(1), prg[arg(1)]
-#      printf "\n\t\t\targ(1)  = %04x",arg(1)
-#      printf "\n\t\t\t*arg(1) = %04x",mem.get_word(arg(1))
-#      printf "\n\t\t\t*arg(1) = %04x",mem.get_word(mem.get_word(arg(1)))
-#      printf "\n\t\t\t*arg(1) = %04x",mem.get_word(mem.get_word(mem.get_word(arg(1))))
-#      printf "\n\t\t\t*arg(1) = %04x",mem[arg(1)]
-#      printf "\n\t\t\t*arg(1) = %04x",mem[mem.get_word(arg(1))]
+      printf "?ptr [%04x], [[%04x]]",arg,arg(1)
+      printf "\t\t\t(%x)", mem.get_word(mem.get_word(arg(1)))
       mem.store_word(arg, mem.get_word(mem.get_word(arg(1)))) if do_run
-      printf "\n\t\t\t      R = %04x",mem.get_word(arg)
       @pos += 4
     when 0x26:
       @pos += 1
-      printf "?movptr [[%04x]], [%04x] (%5d)",arg,arg(1), mem.get_word(arg(1))
+      printf "?movptr [[%04x]], [%04x]",arg,arg(1)
+      printf "\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1))
       mem.store_word(mem.get_word(arg), mem.get_word(arg(1))) if do_run
-      printf "\n\t\t\t      R = %04x",mem.get_word(arg)
       @pos += 4
     when 0x30:
       @pos += 1
@@ -233,14 +244,14 @@ while !@stop
       stop! if do_run
     when 0x42:
       @pos += 1
-      printf "printf([%04x]): \"%d\"", arg, prg[arg]
+      printf "print([%04x]): \"%d\"", arg, prg[arg]
       output += prg[arg].to_s
       @pos += 2
     when 0x43:
       @pos += 1
       printf "[%04x] = atoi([%04x])", arg, arg(1)
-      mem.store_word(arg, mem[arg(1),10].to_i) if do_run
-      printf "\t\t\tR = %04x (%d)", mem.get_word(arg), mem.get_word(arg)
+      mem.store_word(arg, mem[mem.get_word(arg(1)),10].to_i) if do_run
+      printf "\t\t\t%04x (%d)", mem.get_word(arg), mem.get_word(arg)
       @pos += 4
     else
       puts "[!] unknown bytecode #{b.to_s(16)} at pos #{@pos.to_s(16)}"
@@ -254,7 +265,7 @@ ensure
 puts
 puts
 (0x9000...0x10000).each do |addr|
-  printf("mem[%04x] = %04x (%4d)\n", addr,mem[addr],mem[addr]) if mem[addr].to_i != 0
+  printf("mem[%04x] = %02x (%3d)\n", addr,mem[addr],mem[addr]) if mem[addr].to_i != 0
 end
 print "out = #{output.inspect}"
 end
