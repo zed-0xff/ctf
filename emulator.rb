@@ -278,7 +278,7 @@ class Emulator
     (0x9000...0x10000).each do |addr|
       printf("mem[%04x] = %02x (%3d)\n", addr,mem[addr],mem[addr]) if mem[addr].to_i != 0
     end
-    print "out = #{@output.inspect}"
+    puts "OUTPUT:\n#{@output.inspect}"
     end
   end
 end
@@ -294,7 +294,7 @@ end
 fname = ARGV[1]
 emu = Emulator.new
 emu.program = File.read(fname)
-emu.arg = ARGV[2]
+emu.arg = ARGV[2] if ARGV[2]
 
 case ARGV.first[0,1]
 when 'r'
