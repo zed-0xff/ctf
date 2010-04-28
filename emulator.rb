@@ -21,18 +21,38 @@ class Emulator
       raise "Memory access out of range: #{ptr.inspect}" if ptr < 0 || ptr >= 0xffff
       self[ptr] + (self[ptr+1] << 8)
     end
+
+    if "a"[0] == 'a'
+      # ruby1.9
+      def @prg.[](idx,size=nil)
+        if size
+          super
+        else
+          getbyte(idx)
+        end
+      end
+      def @prg.[]=(idx,b)
+        setbyte(idx,b.is_a?(String) ? b.getbyte(0) : b)
+      end
+    end
   end
 
   def prg; @prg; end
   def program; @prg; end
 
   def program= prg
-    @prg[0,prg.size] = prg
+    #@prg[0,prg.size] = prg
+    0.upto(prg.size-1) do |i|
+      @prg[i] = prg[i]
+    end
   end
 
   # установка внешнего аргумента программы ( аналог &arg=XXXXXXXXX в урле )
   def arg= arg
-    @prg[0x8000,arg.size] = arg
+    #@prg[0x8000,arg.size] = arg
+    0.upto(arg.size-1) do |i|
+      @prg[0x8000+i] = arg[i]
+    end
   end
 
   def run!
@@ -120,19 +140,19 @@ class Emulator
       #dump_stack
       printf "ip=%03x sp=%04x bp=%04x b=%02x\t",@pos,@sp,@bp,b if @trace
       case b
-        when 0:
+        when 0
           @pos += 1
           printf "mov [%04x], %04x (%4d)",arg,arg(1),arg(1) if @trace
           mem.store_word(arg,arg(1)) if do_run
           @pos += 4
-        when 1:
+        when 1
           @pos += 1
           printf "mov [%04x], [%04x]",arg,arg(1) if @trace
           printf "\t\t\t(%x)", mem.get_word(arg(1)) if @trace
           mem.store_word(arg, mem.get_word(arg(1))) if do_run
           #mem[arg] = mem[arg(1)]
           @pos += 4
-        when 2:
+        when 2
           @pos += 1
           printf "add [%04x], [%04x]",arg,arg(1) if @trace
           printf "\t\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1)) if @trace
@@ -140,19 +160,19 @@ class Emulator
           mem.store_word(arg, mem.get_word(arg) + mem.get_word(arg(1))) if do_run
           #printf("\n\t\t\t%04x",mem.get_word(arg)) if @trace
           @pos += 4
-        when 3:
+        when 3
           @pos += 1
           printf "[%04x] -= [%04x]", arg, arg(1) if @trace
           printf "\t\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1)) if @trace
           mem.store_word(arg, mem.get_word(arg) - mem.get_word(arg(1))) if do_run
           @pos += 4
-        when 4:
+        when 4
           @pos += 1
           printf "mul [%04x], [%04x]", arg, arg(1) if @trace
           printf "\t\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1)) if @trace
           mem.store_word(arg, mem.get_word(arg) * mem.get_word(arg(1))) if do_run
           @pos += 4
-        when 5:
+        when 5
           @pos += 1
           printf "goto %04x",arg if @trace
           if do_run
@@ -160,7 +180,7 @@ class Emulator
           else
             @pos += 2
           end
-        when 6:
+        when 6
           @pos += 1
           printf "goto %04x if [%04x] == [%04x]",arg,arg(1),arg(2) if @trace
           printf "\t\t(%x, %x) %s", mem.get_word(arg(1)), mem.get_word(arg(2)),
@@ -171,7 +191,7 @@ class Emulator
           else
             @pos += 6
           end
-        when 7:
+        when 7
           @pos += 1
           printf "goto %04x if [%04x] > [%04x]",arg,arg(1),arg(2) if @trace
           if mem.get_word(arg(1)) > mem.get_word(arg(2)) && do_run
@@ -179,7 +199,7 @@ class Emulator
           else
             @pos += 6
           end
-        when 8:
+        when 8
           @pos += 1
           printf "goto %04x if [%04x] < [%04x]\t\t(%x, %x)",arg,arg(1),arg(2),
             mem.get_word(arg(1)), mem.get_word(arg(2)) if @trace
@@ -188,7 +208,7 @@ class Emulator
           else
             @pos += 6
           end
-        when 9:
+        when 9
           @pos += 1
           printf "call %04x",arg if @trace
           if do_run
@@ -206,7 +226,7 @@ class Emulator
             @pos = pop
             @sp += v
           end
-        when 0x0b:
+        when 0x0b
           @pos += 1
           printf "[%04x] (%4d) /= [%04x] (%4d)", arg, mem.get_word(arg), arg(1), mem.get_word(arg(1)) if @trace
           #mem[arg] /= mem[arg(1)]
@@ -214,13 +234,13 @@ class Emulator
             mem.get_word(arg) / mem.get_word(arg(1)) if do_run && @trace
           mem.store_word(arg, mem.get_word(arg) / mem.get_word(arg(1))) if do_run
           @pos += 4
-        when 0x11:
+        when 0x11
           @pos += 1
           @outpos ||= 0
           printf "putchar from [%04x] to outfile (pos=%d)",arg,@outpos if @trace
           @outpos += 1
           @pos += 2
-        when 0x12:
+        when 0x12
           @pos += 1
           printf "putchar from [%04x = %04x]: '%c' (%02x)",arg,
             mem.get_word(arg),
@@ -228,14 +248,14 @@ class Emulator
             prg[mem.get_word(arg)] if @trace
           @output += sprintf("%c",prg[mem.get_word(arg)]) if do_run
           @pos += 2
-        when 0x20:
+        when 0x20
           @pos += 1
           printf "push [%04x]",arg if @trace
           t = mem.get_word(arg)
           printf "\t\t\t\t(%x)",t if @trace
           push t
           @pos += 2
-        when 0x22:
+        when 0x22
           @pos += 1
           # enter
           printf "t1=bp; t2=sp; bp=sp; sp -= %04x; push t2,t1",arg if @trace
@@ -247,47 +267,47 @@ class Emulator
           push t2
           push t1
           @pos += 2
-        when 0x23:
+        when 0x23
           @pos += 1
           @bp = pop if do_run
           @sp = pop if do_run
           printf "pop bp,sp" if @trace
-        when 0x24:
+        when 0x24
           @pos += 1
           printf "[%04x] = bp",arg if @trace
           mem.store_word(arg,@bp)
           @pos += 2
-        when 0x25:
+        when 0x25
           @pos += 1
           printf "?ptr [%04x], [[%04x]]",arg,arg(1) if @trace
           t = mem.get_word(mem.get_word(arg(1)))
           printf "\t\t\t(%x)", t if @trace
           mem.store_word(arg, t) if do_run
           @pos += 4
-        when 0x26:
+        when 0x26
           @pos += 1
           printf "?movptr [[%04x]], [%04x]",arg,arg(1) if @trace
           t = mem.get_word(arg(1))
           printf "\t\t(%x, %x)", mem.get_word(arg),t if @trace
           mem.store_word(mem.get_word(arg), t) if do_run
           @pos += 4
-        when 0x30:
+        when 0x30
           @pos += 1
           puts "[*] EXIT" if @trace
           stop! if do_run
-        when 0x42:
+        when 0x42
           @pos += 1
           printf "printf(\"%%hu\", [%04x]): \"%d\"", arg, mem.get_word(arg) if @trace
           @output += mem.get_word(arg).to_s
           @pos += 2
-        when 0x43:
+        when 0x43
           @pos += 1
           printf "[%04x] = atoi([%04x])", arg, arg(1) if @trace
           mem.store_word(arg, mem[mem.get_word(arg(1)),10].to_i) if do_run
           printf "\t\t\t%04x (%d)", mem.get_word(arg), mem.get_word(arg) if @trace
           @pos += 4
         else
-          puts "[!] unknown bytecode #{b.to_s(16)} at pos #{@pos.to_s(16)}"
+          printf "[!] unknown bytecode %02x at pos %04x\n", b, @pos
           stop!
       end
       puts if @trace
