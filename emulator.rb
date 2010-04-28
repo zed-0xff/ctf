@@ -71,13 +71,13 @@ class Emulator
   end
 
   def dump_stack
-    printf "== SP:\t"
+    printf "== SP: %04x:\t",@sp
     pos = @sp
     100.times do |i|
       break if pos >= 0x0fffe
       pos += 2
       printf "%04x ", mem.get_word(pos)
-      print "\n\t" if (i+1)%8==0
+      print "\n\t\t" if (i+1)%8==0
     end
     puts
   end
@@ -192,9 +192,11 @@ class Emulator
           end
         when 0x0a
           @pos += 1
-          printf "ret\n"
+          printf "ret %04x\n",arg
           if do_run
+            v = arg
             @pos = pop
+            @sp += v
           end
         when 0x0b:
           @pos += 1
@@ -267,8 +269,8 @@ class Emulator
           stop! if do_run
         when 0x42:
           @pos += 1
-          printf "printf(\"%%hu\", [%04x]): \"%d\"", arg, prg[arg]
-          @output += prg[arg].to_s
+          printf "printf(\"%%hu\", [%04x]): \"%d\"", arg, mem.get_word(arg)
+          @output += mem.get_word(arg).to_s
           @pos += 2
         when 0x43:
           @pos += 1

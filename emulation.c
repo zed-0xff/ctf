@@ -152,7 +152,7 @@ int __cdecl startemulation(int mem, int a2, FILE *stream)
           else
             IP = arg;
           continue;
-        case 0xA:
+        case 0xA: // ret
           ++IP;
           SP += 2;
           v13 = IP;
