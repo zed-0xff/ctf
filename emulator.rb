@@ -3,7 +3,7 @@
 STDOUT.sync = true
 
 class Emulator
-  attr_accessor :do_run, :output
+  attr_accessor :do_run, :output, :do_memdump
 
   def initialize
     @do_run = false
@@ -24,6 +24,7 @@ class Emulator
 
     if "a"[0] == 'a'
       # ruby1.9
+      STDERR.puts "[!] WARNING! there's some uncatched bug when using ruby 1.9 with 'set' program"
       def @prg.[](idx,size=nil)
         if size
           super
@@ -150,7 +151,6 @@ class Emulator
           printf "mov [%04x], [%04x]",arg,arg(1) if @trace
           printf "\t\t\t(%x)", mem.get_word(arg(1)) if @trace
           mem.store_word(arg, mem.get_word(arg(1))) if do_run
-          #mem[arg] = mem[arg(1)]
           @pos += 4
         when 2
           @pos += 1
@@ -229,7 +229,6 @@ class Emulator
         when 0x0b
           @pos += 1
           printf "[%04x] (%4d) /= [%04x] (%4d)", arg, mem.get_word(arg), arg(1), mem.get_word(arg(1)) if @trace
-          #mem[arg] /= mem[arg(1)]
           printf "\n\t\t\t div %04x / %04x = %04x", mem.get_word(arg), mem.get_word(arg(1)),
             mem.get_word(arg) / mem.get_word(arg(1)) if do_run && @trace
           mem.store_word(arg, mem.get_word(arg) / mem.get_word(arg(1))) if do_run
@@ -242,9 +241,9 @@ class Emulator
           @pos += 2
         when 0x12
           @pos += 1
-          printf "putchar from [%04x = %04x]: '%c' (%02x)",arg,
+          printf "putchar from [%04x = %04x]: %s (%02x)",arg,
             mem.get_word(arg),
-            prg[mem.get_word(arg)],
+            prg[mem.get_word(arg)].chr.inspect,
             prg[mem.get_word(arg)] if @trace
           @output += sprintf("%c",prg[mem.get_word(arg)]) if do_run
           @pos += 2
@@ -315,13 +314,14 @@ class Emulator
 
     ensure
 
-    if @trace
+    if @trace || @do_memdump
       puts
       puts
-      0x9000.step(0x10000-2,2) do |addr|
+      (@pos & 0xfffe).step(0x10000-2,2) do |addr|
         w = mem.get_word(addr)
-        printf "mem[%04x] = %04x (%5d)\n", addr, w, w unless w == 0 if @trace
+        printf "mem[%04x] = %04x (%5d)\n", addr, w, w unless w == 0
       end
+      #p mem[0x4b3,0x100]
       puts "OUTPUT:\n#{@output.inspect}"
     else
       puts @output
@@ -345,6 +345,7 @@ emu.arg = ARGV[2] if ARGV[2]
 
 case ARGV.first[0,1]
 when 'r'
+  emu.do_memdump = true if ARGV.first['m']
   emu.run!
 when 'd'
   emu.disasm!
