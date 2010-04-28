@@ -85,7 +85,7 @@ int __cdecl startemulation(int mem, int a2, FILE *stream)
           *(mem + arg) = atoi((const char *)(mem + *(mem + arg(1))));
           IP += 4;
           continue;
-        case 0x24:
+        case 0x24: // push BP
           ++IP;
           *(arg + mem) = BP;
           IP += 2;
@@ -114,7 +114,7 @@ int __cdecl startemulation(int mem, int a2, FILE *stream)
           SP -= 2;
           IP += 2;
           continue;
-        case 0x23:
+        case 0x23: // pop BP,SP
           ++IP;
           SP += 2;
           BP = *(mem + SP);

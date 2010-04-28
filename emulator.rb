@@ -18,6 +18,7 @@ class Emulator
     end
 
     def @prg.get_word(ptr)
+      raise "Memory access out of range: #{ptr.inspect}" if ptr < 0 || ptr >= 0xffff
       self[ptr] + (self[ptr+1] << 8)
     end
   end
@@ -70,12 +71,13 @@ class Emulator
   end
 
   def dump_stack
-    printf "== SP: "
+    printf "== SP:\t"
     pos = @sp
-    4.times do
-      break if pos >= 0x0e000
+    100.times do |i|
+      break if pos >= 0x0fffe
       pos += 2
       printf "%04x ", mem.get_word(pos)
+      print "\n\t" if (i+1)%8==0
     end
     puts
   end
@@ -98,7 +100,11 @@ class Emulator
     while !@stop
       raise "no prg" if !@prg || @prg.size == 0
 
-      if ARGV.first == 'fact' && @pos == 0x85 && !do_run
+      if ARGV[1] == 'fact' && @pos == 0x85 && !do_run
+        @pos = 0x87
+      end
+
+      if ARGV[1] == 'fact' && @pos == 0x8e && !do_run
         @pos = 0x90
       end
 
@@ -178,6 +184,7 @@ class Emulator
           @pos += 1
           printf "call %04x",arg
           if do_run
+            puts
             push(@pos+2)
             @pos = arg
           else
@@ -213,11 +220,14 @@ class Emulator
           @pos += 2
         when 0x20:
           @pos += 1
-          printf "push %04x",arg
-          push arg
+          printf "push [%04x]",arg
+          t = mem.get_word(arg)
+          printf "\t\t\t\t(%x)",t
+          push t
           @pos += 2
         when 0x22:
           @pos += 1
+          # enter
           printf "t1=bp; t2=sp; bp=sp; sp -= %04x; push t2,t1",arg
           v = arg
           t1 = @bp
@@ -240,14 +250,16 @@ class Emulator
         when 0x25:
           @pos += 1
           printf "?ptr [%04x], [[%04x]]",arg,arg(1)
-          printf "\t\t\t(%x)", mem.get_word(mem.get_word(arg(1)))
-          mem.store_word(arg, mem.get_word(mem.get_word(arg(1)))) if do_run
+          t = mem.get_word(mem.get_word(arg(1)))
+          printf "\t\t\t(%x)", t
+          mem.store_word(arg, t) if do_run
           @pos += 4
         when 0x26:
           @pos += 1
           printf "?movptr [[%04x]], [%04x]",arg,arg(1)
-          printf "\t\t(%x, %x)", mem.get_word(arg), mem.get_word(arg(1))
-          mem.store_word(mem.get_word(arg), mem.get_word(arg(1))) if do_run
+          t = mem.get_word(arg(1))
+          printf "\t\t(%x, %x)", mem.get_word(arg),t
+          mem.store_word(mem.get_word(arg), t) if do_run
           @pos += 4
         when 0x30:
           @pos += 1
@@ -255,7 +267,7 @@ class Emulator
           stop! if do_run
         when 0x42:
           @pos += 1
-          printf "print([%04x]): \"%d\"", arg, prg[arg]
+          printf "printf(\"%%hu\", [%04x]): \"%d\"", arg, prg[arg]
           @output += prg[arg].to_s
           @pos += 2
         when 0x43:
@@ -275,8 +287,9 @@ class Emulator
 
     puts
     puts
-    (0x9000...0x10000).each do |addr|
-      printf("mem[%04x] = %02x (%3d)\n", addr,mem[addr],mem[addr]) if mem[addr].to_i != 0
+    0x9000.step(0x10000-2,2) do |addr|
+      w = mem.get_word(addr)
+      printf "mem[%04x] = %04x (%5d)\n", addr, w, w unless w == 0
     end
     puts "OUTPUT:\n#{@output.inspect}"
     end
