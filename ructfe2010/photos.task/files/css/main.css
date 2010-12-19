@@ -1,0 +1,221 @@
+body {
+  font-style : Serif;
+  font-family : Constantia, Arial;
+  background-color : rgb(120, 120, 120);
+}
+
+html, body, body>table {
+	height : 100%;
+	margin : 0;
+	padding : 0;
+}
+
+a {
+	color : white;
+	text-decoration : none;
+	font-weight : bold;
+}
+
+
+.button {
+  height : 28px;
+	width : 88px;
+	display : block;
+	text-align : center;
+	padding-top : 10px;
+  background : url('../../files/image/button.png');
+  cursor : pointer;
+  color : white;
+}
+
+.page {
+  margin-left : auto;
+  margin-right : auto;
+  text-align : left;
+  display : none;
+  border : 1px solid black;
+  border-radius : 10px;
+  -moz-border-radius : 10px;
+  -webkit-border-radius : 10px;
+}
+
+#create_album {
+  width : 300px;
+  margin-top : 30px;
+}
+
+#login_form, #upload {
+  width : 300px;
+  padding : 20px;
+}
+
+#login_form div, #upload div {
+  padding : 5px;
+}
+
+#login {
+  position : relative;
+  left : 50px;
+  width : 180px;
+}
+
+#password {
+  position : relative;
+  left : 20px;
+  width : 180px;
+}
+
+#login_form_button, #upload_form_button {
+  display : inline;
+}
+
+#albums_panel {
+  display : none;
+  width : 100%;
+  margin : auto;
+  text-align : center;
+}
+
+#albums {
+  width : 90%;
+  margin-top : 30px;
+  padding : 10px 20px;
+}
+
+#albums img {
+  padding : 5px;
+}
+
+#albums img:hover {
+  background : #555;
+  visibility : visible;
+  border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -moz-border-radius : 10px;
+}
+
+#albums td {
+  text-align : center;
+}
+
+.plus {
+  visibility : hidden;
+  margin-bottom : 0px;
+}
+
+.plus:hover {
+  cursor : pointer;  
+}
+
+.album:hover .plus {
+  background : #555;
+  visibility : visible;
+  border-radius : 10px;
+  -webkit-border-radius : 10px;
+  -moz-border-radius : 10px;
+}
+
+.text {
+  border : 1px solid #666;
+  padding : 2px;
+}
+
+#nickname {
+  color : black;
+  font-size : 16pt;
+  padding-right : 20px;
+}
+
+.nophotos {
+  font-size : 14pt;
+  text-align : center;
+}
+
+#ads {
+  color : white;
+  width : 150px;
+  position : fixed;
+  left : 0px;
+  bottom : 0px;
+  border : 1px dashed white;
+  border-radius : 3px;
+  -moz-border-radius : 3px;
+  -webkit-border-radius : 3px;
+  padding : 3px;
+}     
+
+.denied {
+  text-align : center;
+  color : black;
+  font-size : 16pt;
+}
+
+#back {
+  background : url('../../files/image/back.jpg') center no-repeat; 
+  -webkit-background-size : 100% 100%;
+  -moz-background-size : 100% 100%;
+  width : 1088px;
+}
+
+#welcome {
+	color : whitesmoke;
+	cursor : default;
+	padding : 10px 0 0 0;
+}
+
+#main {
+  width : 988px;
+	padding-top : 25px;
+}
+
+.unselected {
+	color : black;
+  cursor : pointer;
+  text-align : right;
+}
+
+.unselected:hover {
+	background-color : rgba(0, 0, 0, 0.3);
+}
+
+#navigation {
+	padding : 5px 0 5px 0;
+}
+
+#navigation a {
+	display : block;
+	text-indent : 30px;
+	width : 100%;
+}
+
+.minititle {
+  font-size : 16pt;
+}
+
+.abutton {
+  margin-right : auto;
+  margin-left : auto;
+  width : 80px;
+  color : black;
+  border : 1px solid black;
+  border-radius : 6px;
+  -webkit-border-radius : 6px;
+  -moz-border-radius : 6px;
+  padding : 2px;
+  cursor : pointer;
+  background-color : rgba(0, 0, 0, 0.3);
+}
+
+.abutton:hover {
+  background-color : rgba(0, 0, 0, 0.5);
+}
+
+.error {
+  color : #800;
+  text-align : center;
+  font-weight : bold;
+}
+
+.photo {
+  cursor : pointer;
+}

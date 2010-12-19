@@ -1,0 +1,14 @@
+#navigation
+  %table{'width' => '165px'}
+    %tr
+      %td{'id' => 'nav_albums'}
+        %a{'class' => 'unselected'}
+          Albums
+    %tr
+      %td
+        - if (@auth)
+          #albums_panel
+            %a{'id' => 'create_album_button', 'class' => 'unselected'}
+              Create Album
+
+         

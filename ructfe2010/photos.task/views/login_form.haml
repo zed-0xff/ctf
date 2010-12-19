@@ -1,0 +1,13 @@
+%div{'id' => 'login_form', 'class' => 'page'}
+  %form{'action' => 'login', 'method' => 'post', 'id' => 'auth_form'}
+    %div{'class' => 'minititle'}
+      Login 
+    %div
+      Login: 
+      %input{'type' => 'text', 'id' => 'login', 'name' =>'login', 'class' => 'text'}
+    %div
+      Password: 
+      %input{'type' => 'password', 'id' => 'password', 'name' =>'password', 'class' => 'text'}
+    %div{'id' => 'check_login_form', 'class' => 'error'}
+    %div{'style' => 'text-align : center;'}
+      %input{'class' => 'abutton','type' => 'submit','value' => 'Login'}      

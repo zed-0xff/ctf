@@ -1,0 +1,26 @@
+%div{'id' => 'create_album', 'class' => 'page'}
+  %form{'action' => 'ajax/create', 'method' => 'post', 'id' => 'create_album_form', 'onsubmit' => 'return false;'}
+    %table{'align' => 'center'}
+      %tr
+        %td{'colspan' => '2', 'class' => 'minititle'}
+          Create your own album
+      %tr
+        %td
+          Album name
+        %td
+          %input{'type' => 'text', 'maxlength' => '15', 'id' => 'album_name', 'name' => 'title_input', 'class' => 'text'}
+      %tr
+        %td
+          Mode
+        %td
+          %input{'type' => 'radio', 'name' => 'mode', 'value' => '0'}
+            Public
+          %input{'type' => 'radio', 'name' => 'mode', 'value' => '1', 'checked' => 'checked'}
+            Private
+      %tr
+        %td{'colspan' => '2', 'class' => 'error'}
+          #check_create_form
+      %tr
+        %td{'colspan' => '2', 'align' => 'center'}
+          %input{'type' => 'button', 'id' => 'form_create_album_button', 'value' => 'Create', 'class' => 'abutton'}
+

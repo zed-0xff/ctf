@@ -1,0 +1,17 @@
+%tr
+  %td{'align' => 'left', 'id' => 'logo', 'width' => '200'}
+    %img{'src' => 'files/image/logo.png'}
+  %td{'align' => 'right', 'valign' => 'top', 'id' => 'welcome'}
+    %table
+      %tr
+        %td{'id' => 'nickname'}
+          - if (@auth)
+            = @login
+        - if (! @auth)
+          %td{'class' => 'button','id' => 'nav_login'}
+            %a
+              Login        
+        - else 
+          %td{'class' => 'button','id' => 'nav_logout'}
+            %a
+              Logout

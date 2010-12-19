@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+    %link{'href'=>'files/css/main.css', 'rel'=>'stylesheet', 'type'=>'text/css'}
+    %title Photos
+    %script{'src' => 'files/javascript/jquery.min.js', 'type' => 'text/javascript'}
+    %script{'src' => 'files/javascript/jquery-ui.min.js', 'type' => 'text/javascript'}
+    %script{'src' => 'files/javascript/main.js', 'type'=>'text/javascript'}
+  %body
+    %table{'width' => '100%'}
+      %tr
+        %td{'align' => 'center', 'valign' => 'top'}
+          #back
+            %table{'cellspacing' => '0', 'cellpadding' => '0', 'id' => 'main'}
+              = haml :header
+              %tr
+                %td{'align' => 'right', 'valign' => 'top', 'style' => 'padding-top: 50px; padding-right: 20px'}
+                  = haml :navigation
+                %td
+                  = haml :albums
+                  = haml :show_pictures
+                  = haml :create_album
+                  = haml :upload_pictures
+                  = haml :login_form
+                  = haml :ads
+              %tr
+                %td{'colspan' => 2}
+                  %img{'src' => 'files/image/knight.png', 'align' => 'right'}

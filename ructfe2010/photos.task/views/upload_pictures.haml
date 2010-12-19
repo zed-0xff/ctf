@@ -1,0 +1,16 @@
+%div{'id' => 'upload', 'class' => 'page'}
+  %form{'action' => 'ajax/upload', 'method' => 'post', 'enctype' => 'multipart/form-data', 'target' => 'upload_response', 'id' => 'upload_form'}
+    %div{'class' => 'minititle'}
+      Upload your photos in album
+    %div
+      Title:
+      %input{'type' => 'text','maxlength' => '15', 'id' => 'title_input', 'name' =>'title_input'}
+    %div
+      %input{'type' => 'file', 'id' => 'file_input', 'name' => 'file_input'}
+      %input{'type' => 'hidden', 'id' => 'aid', 'name' => 'aid', 'value' => '1'}
+    %div{'class' => 'error'}
+      #check_upload_form
+    #upload_form_button
+      %a{'class' => 'abutton'}
+        Upload
+  %iframe{'style' => 'display: none;', 'id' => 'upload_response'}
