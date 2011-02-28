@@ -1,0 +1,5 @@
+key.hex is AVR AtMega64 (or 128) code
+
+1. look at key.txt at end
+2. look at key.bin in hex after substring "key:"
+3. look into key.idb to calls to CreateChar function
