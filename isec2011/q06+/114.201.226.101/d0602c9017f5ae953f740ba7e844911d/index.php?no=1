@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src=jquery.js></script>
+		
+		<style>
+		body {
+			padding: 0 auto;
+			margin: 0 auto;
+			font-family: Arial,Helvetica,sans-serif;
+			font-size: 12px;
+			line-height: 1.3em;
+		}
+		#main{
+			padding: 0 auto;
+			margin: 0 auto;
+			width: 1000px;
+			padding: 5px 10px 10px 10px;
+			background: #ffffff; 
+		}
+		#board{
+			margin: 0 auto;
+			margin-top: 100px;
+			width: 600px;
+			height:600px;
+			padding: 5px 10px 10px 10px;
+			background: #ffffff; 
+		
+		}
+		#head_board{
+			padding-top:5px;
+			padding-bottom:5px;
+			color: green;
+		}
+		#body_board{
+			margin:0px;
+			padding:10px;
+			margin-left:14px;
+			width:550px;
+			height:auto;
+		}
+		#body_foot_board{
+			text-align:center;
+			padding-top:6px;
+		}
+		#foot_board{
+			text-align:center;
+		}
+		</style>
+		<title>Challenge</title>
+	</head>
+	<body>
+		<div id="container">	
+			<div id="header"></div>
+			<div id="main" style=''>
+				<div id=board>
+									<div id=head_board style='text-align:center'>Notice</div>
+					<div id=body_board style=''>
+						<table bgcolor=white border=2 cellspacing=0 bordercolor=#4F9D24 frame=box rules=none width=100% style='padding:5px;'>
+							<tr><td></td></tr>
+							<form>
+							<input type=hidden name=no value=1>
+							<tr align=center><td>Password : <input type=password name=password value=></td></tr>
+							<tr align=center><td><input type=submit></td></tr>
+							</form>
+							<tr><td></td></tr>
+						</table>
+					</div>
+					<div style='clear:both;'></div>
+								</div>
+			</div>
+			<div id="footer"></div>
+		</div>
+
+	</body>
+</html>
