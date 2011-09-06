@@ -1,0 +1,5 @@
+1. Открываем lol.pcap в wireshark
+2. follow UDP stream
+3. важно выбрать только одно направление потока! иначе будет треск
+4. save to file
+5. audacious -> import raw file -> a-Law 8000 Hz
