@@ -1,0 +1,9 @@
+образ PDF эксплоита для jailbreak-а айфона
+
+1. находим оригинальный PDF jailbreak (JailBreakMe)
+2. распаковываем оба образа ФС
+3. удаляем одинаковые файлы из ddtek-овского
+4. получаем файл /usr/bin/dd
+5. strings -> кучка больших чисел вида 109868682..........8322997248.000000
+6. конвертим во float и каким-то образом смотрим их binary representation
+7. "DDTEKJailbreaksarethemostbestest"
