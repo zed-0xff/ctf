@@ -19,7 +19,7 @@ b0 = b0*N
 b1 = b1*N
 
 r = ''
-0.step(data.size,b0.size) do |i|
+0.step(data.size-1,b0.size) do |i|
   case (d=data[i,b0.size])
   when b0
     print "."
@@ -29,7 +29,7 @@ r = ''
     r << '1'
   else
     raise "SYNC ERROR" if d.size == b0.size
-    raise "NOT ENOUGH DATA"
+    raise "NOT ENOUGH DATA #{d.size}/#{b0.size}"
     raise "unknown #{d.size} (normal: #{b0.size}) bytes of data #{d.split('').map{|x| "%02x " % x.ord}.join}"
   end
 end
