@@ -1,0 +1,4 @@
+look for "0xFF 0xD9" JPEG EOF mark
+=> found data after mark
+=> unzip filename.jpg
+=> got 9 chunks (see chunks subdir)
