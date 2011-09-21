@@ -1,0 +1,110 @@
+ 1 | bobsleigh                                          | 5636 | France    
+ 2 | Leet More                                          | 4225 | Russia    
+ 3 | smokedchicken                                      | 3555 | Russia    
+ 4 | CLGT                                               | 3454 | Vietnam   
+ 5 | Shell-Storm                                        | 2956 | France    
+ 6 | crumbs@venice                                      | 2803 | Italy     
+ 7 | C.o.P                                              | 2802 | France    
+ 8 | NULL Life                                          | 2538 | Mexico    
+ 9 | puolse                                             | 2450 | Unknown   
+10 | disekt                                             | 2350 | USA       
+
+11 | Lobotomy                                           | 2304 | Russia    
+
+12 | BTF4CTF                                            | 2255 | Ukraine   
+13 | ChocolateMakers                                    | 2252 | Italy     
+14 | MondayHaters                                       | 2152 | Canada    
+15 | Big-Daddy                                          | 2036 | France    
+16 | Ring0                                              | 1906 | Denmark   
+17 | knackwurst                                         | 1901 | Luxembourg 
+18 | Koibasta                                           | 1900 | Russia    
+19 | MiT                                                | 1755 | Russia    
+20 | reversing-group                                    | 1603 | Germany   
+21 | letmein                                            | 1550 | Belgium   
+22 | Certified Ethylic Hackers                          | 1302 | France    
+23 | Delusions of Grandeur                              | 1250 | USA       
+23 | Honeypot                                           | 1250 | Russia    
+24 | CRYT0                                              | 1200 | Unknown   
+24 | hackademics                                        | 1200 | Unknown   
+25 | fml                                                | 1050 | Luxembourg 
+26 | FIXME                                              | 1003 | Switzerland
+27 | Zenk-Security                                      | 1000 | France    
+28 | Team Tasteless                                     |  953 | Russia    
+29 | Song of Freedom                                    |  900 | Unknown   
+30 | Anesec                                             |  853 | Italy     
+31 | B2H                                                |  816 | Germany   
+32 | mak                                                |  807 | Unknown   
+33 | MyLittlePwnies                                     |  800 | USA       
+34 | littlenuns                                         |  750 | Unknown   
+35 | Marteam                                            |  702 | Luxembourg 
+36 | HackInDZie                                         |  700 | Algeria   
+37 | r                                                  |  550 | Spain     
+38 | p03p0wn                                            |  500 | Japan     
+38 | stevedelik                                         |  500 | Unknown   
+39 | CSG                                                |  450 | USA       
+39 | keysec                                             |  450 | Unknown   
+40 | Sven Volga                                         |  400 | Unknown   
+40 | Team Jacob                                         |  400 | USA       
+41 | activalink                                         |  300 | Spain     
+41 | grml                                               |  300 | Unknown   
+41 | Hathacker                                          |  300 | France    
+42 | err0r                                              |  200 | Spain     
+42 | Hacking Alpacas                                    |  200 | USA/Denmark
+43 | KEVA Team                                          |  150 | Unknown   
+44 | Team404                                            |  100 | Ireland   
+45 | 1_man_army                                         |    0 | Germany   
+45 | Alberlinette                                       |    0 | Unknown   
+45 | BIOS                                               |    0 | India     
+45 | blackb0x                                           |    0 | Unknown   
+45 | Brandon Gnash                                      |    0 | Unknown   
+45 | BullShit Security Team                             |    0 | Unknown   
+45 | Cris                                               |    0 | Unknown   
+45 | dark                                               |    0 | France    
+45 | Dark Hunters                                       |    0 | Unknown   
+45 | Dark Sec                                           |    0 | Unknown   
+45 | Dawgs                                              |    0 | Unknown   
+45 | dide                                               |    0 | Unknown   
+45 | DTC                                                |    0 | Belgium   
+45 | Ender                                              |    0 | Unknown   
+45 | fluxius                                            |    0 | Unknown   
+45 | fofunz                                             |    0 | Great Britain  
+45 | ForbiddenBITS                                      |    0 | Tunisia   
+45 | gnix                                               |    0 | Unknown   
+45 | HackerDom                                          |    0 | Russia    
+45 | hackt0r                                            |    0 | Unknown   
+45 | Henry Dorsett Case                                 |    0 | Unknown   
+45 | herby                                              |    0 | Unknown   
+45 | HQS                                                |    0 | Russia    
+45 | IDB                                                |    0 | Poland    
+45 | IndianOranges                                      |    0 | India     
+45 | ipbros                                             |    0 | Unknown   
+45 | jescobar                                           |    0 | Colombia   
+45 | lesage                                             |    0 | Unknown   
+45 | luffy                                              |    0 | USA       
+45 | m0t                                                |    0 | Unknown   
+45 | m3x1c4n5                                           |    0 | Mexico    
+45 | n0body                                             |    0 | Unknown   
+45 | NarwhalReveng                                      |    0 | USA       
+45 | NS                                                 |    0 | Unknown   
+45 | pago                                               |    0 | Unknown   
+45 | pollypocket                                        |    0 | Belgium   
+45 | redrules                                           |    0 | Unknown   
+45 | Rogerio                                            |    0 | Unknown   
+45 | Roman                                              |    0 | Unknown   
+45 | rose                                               |    0 | Unknown   
+45 | Sergio Arcos                                       |    0 | Unknown   
+45 | shesh s                                            |    0 | Unknown   
+45 | SideDark                                           |    0 | Unknown   
+45 | Sons of Glitches                                   |    0 | USA       
+45 | StolenBytes                                        |    0 | Unknown   
+45 | suckmebaby                                         |    0 | Unknown   
+45 | sudoman                                            |    0 | Unknown   
+45 | sutegoma2                                          |    0 | Japan     
+45 | taz                                                |    0 | Unknown   
+45 | The League Of Extra Ordinary Gentlemen             |    0 | Greece    
+45 | UFSIT                                              |    0 | USA       
+45 | underminerr                                        |    0 | Great Britain  
+45 | Valentin                                           |    0 | Russia    
+45 | ZM4LW4R3                                           |    0 | France    
+45 | [cansored]                                         |    0 | Russia    
+45 | _Gemini_                                           |    0 | Unknown   
