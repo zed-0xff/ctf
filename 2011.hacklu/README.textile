@@ -1,4 +1,7 @@
 h1. Hack.lu 2011 CTF
 
+* 11-е место
+* 52 активных команд
+* 108 всего зарегистрированных команд
 * "writeups":http://rogunix.com/ctf/hacklu2011.html
 
