@@ -1,0 +1,177 @@
+diff -rup decompyle.orig/Parser.py decompyle/Parser.py
+--- decompyle.orig/Parser.py	2005-01-17 16:33:08.000000000 +0300
++++ decompyle/Parser.py	2010-02-03 19:51:29.000000000 +0300
+@@ -99,6 +99,7 @@ class Parser(GenericASTBuilder):
+ 		'''
+ 		stmt ::= augassign1
+ 		stmt ::= augassign2
++		stmt ::= augassign3
+ 		augassign1 ::= expr expr inplace_op designator
+ 		augassign1 ::= expr expr inplace_op ROT_THREE STORE_SUBSCR
+ 		augassign1 ::= expr expr inplace_op ROT_TWO   STORE_SLICE+0
+@@ -108,6 +109,8 @@ class Parser(GenericASTBuilder):
+ 		augassign2 ::= expr DUP_TOP LOAD_ATTR expr
+ 				inplace_op ROT_TWO   STORE_ATTR
+ 
++		augassign3 ::= expr expr ROT_TWO designator designator
++
+ 		inplace_op ::= INPLACE_ADD
+ 		inplace_op ::= INPLACE_SUBTRACT
+ 		inplace_op ::= INPLACE_MULTIPLY
+@@ -185,6 +188,33 @@ class Parser(GenericASTBuilder):
+ 		import_as ::= IMPORT_FROM designator
+ 		'''
+ 
++	def p_import25(self, args):
++		'''
++		stmt ::= importstmt2
++		stmt ::= importfrom2
++		stmt ::= importfrom2
++		stmt ::= importstmt3
++		stmt ::= importfrom4
++
++		importstmt2 ::= LOAD_CONST import_as
++		importstar2 ::= LOAD_CONST IMPORT_NAME IMPORT_STAR
++		importstmt3 ::= expr expr IMPORT_NAME designator
++
++		importfrom2 ::= LOAD_CONST IMPORT_NAME importlist2 POP_TOP
++		importfrom4 ::= LOAD_CONST LOAD_CONST IMPORT_NAME IMPORT_FROM designator POP_TOP
++		importlist2 ::= importlist2 import_as
++		importlist2 ::= import_as
++		import_as ::= IMPORT_NAME designator
++		import_as ::= IMPORT_NAME LOAD_ATTR designator
++		import_as ::= IMPORT_FROM designator
++		'''
++
++
++#	def p_docstring(self, args):
++#		'''
++#		'''
++
++
+ 	def p_grammar(self, args):
+ 		'''
+ 		stmts ::= stmts stmt
+@@ -221,6 +251,7 @@ class Parser(GenericASTBuilder):
+ 		stmt ::= yield_stmt
+ 		yield_stmt ::= expr YIELD_STMT
+ 		yield_stmt ::= expr YIELD_VALUE
++		yield_stmt ::= expr YIELD_VALUE POP_TOP
+ 
+ 		stmt ::= break_stmt
+ 		break_stmt ::= BREAK_LOOP
+@@ -497,8 +528,8 @@ def parse(tokens, customize):
+ 		if p.customized.has_key(k):
+ 			continue
+ 		p.customized[k] = None
+-
+ 		#nop = lambda self, args: None
++		rule2 = None
+ 		op = k[:string.rfind(k, '_')]
+ 		if op in ('BUILD_LIST', 'BUILD_TUPLE'):
+ 			rule = 'build_list ::= ' + 'expr '*v + k
+@@ -517,6 +548,7 @@ def parse(tokens, customize):
+ 				  ('expr '*v, k), nop)
+ 			rule = 'mkfunc ::= %s LOAD_CONST %s' % ('expr '*v, k)
+ 		elif op == 'MAKE_CLOSURE':
++			rule2 = 'mkfunc ::= expr ' +k + ' STORE_FAST'
+ 			p.addRule('mklambda ::= %s load_closure LOAD_LAMBDA %s' %
+ 				  ('expr '*v, k), nop)
+ 			rule = 'mkfunc ::= %s load_closure LOAD_CONST %s' % ('expr '*v, k)
+@@ -531,6 +563,8 @@ def parse(tokens, customize):
+ 		else:
+ 			raise 'unknown customize token %s' % k
+ 		p.addRule(rule, nop)
++		if rule2:
++		    p.addRule(rule2, nop)
+ 	ast = p.parse(tokens)
+ 	#p.cleanup()
+ 	return ast
+diff -rup decompyle.orig/Walker.py decompyle/Walker.py
+--- decompyle.orig/Walker.py	2005-01-17 16:33:28.000000000 +0300
++++ decompyle/Walker.py	2010-01-31 01:12:30.000000000 +0300
+@@ -170,6 +170,7 @@ TABLE_DIRECT = {
+     'assign':		( '%|%c = %c\n', -1, 0 ),
+     'augassign1':	( '%|%c %c %c\n', 0, 2, 1),
+     'augassign2':	( '%|%c%c %c %c\n', 0, 2, -3, -4),
++    'augassign3':	( '%|%c,%c = (%c, %c)\n', 3, 4, 0, 1),
+ #   'dup_topx':		( '%c', 0),
+     'designList':	( '%c = %c', 0, -1 ),
+     'and':          	( '(%c and %c)', 0, 3 ),
+@@ -188,6 +189,8 @@ TABLE_DIRECT = {
+     'importstmt2':	( '%|import %c\n', 1),
+     'importstar2':	( '%|from %[1]{pattr} import *\n', ),
+     'importfrom2':	( '%|from %[1]{pattr} import %c\n', 2 ),
++    'importfrom4':	( '%|from %[2]{pattr} import %c\n', 4 ),
++    'importstmt3':	( '%|import %c\n', 3),
+     'importlist2':	( '%C', (0, sys.maxint, ', ') ),
+     'assert':		( '%|assert %c\n' , 3 ),
+     'assert2':		( '%|assert %c, %c\n' , 3, -5 ),
+@@ -386,8 +389,9 @@ class Walker(GenericASTTraversal, object
+             self.write('...')
+         elif data is None:
+             # LOAD_CONST 'None' only occurs, when None is
+-            # implicit eg. in 'return' w/o params
+-            pass
++            # implicit eg. in 'return' w/o params (???)
++            self.write('None')
++#            pass
+         else:
+             self.write(repr(data))
+         # LOAD_CONST is a terminal, so stop processing/recursing early
+@@ -757,8 +761,8 @@ class Walker(GenericASTTraversal, object
+             self.print_("(", ", ".join(params), "):")
+             #self.print_(indent, '#flags:\t', int(code.co_flags))
+ 
+-        if code.co_consts[0] != None: # docstring exists, dump it
+-            self.print_docstring(indent, code.co_consts[0])
++#        if code.co_consts[0] != None: # docstring exists, dump it
++#            self.print_docstring(indent, code.co_consts[0])
+ 
+         for g in find_globals(ast, {}).keys():
+            self.print_(indent, 'global ', g)
+diff -rup decompyle.orig/dis_files.py decompyle/dis_files.py
+--- decompyle.orig/dis_files.py	2004-12-14 15:29:32.000000000 +0300
++++ decompyle/dis_files.py	2010-01-29 14:52:03.000000000 +0300
+@@ -31,6 +31,7 @@ by_version = {
+     '2.1': dis('2.1', 'dis_21'),
+     '2.2': dis('2.2', 'dis_22'),
+     '2.3': dis('2.3', 'dis_23'),
++    '2.5': dis('2.5', 'dis_23'),
+ }
+ 
+ by_magic = dict( [ (mag, by_version[ver])
+diff -rup decompyle.orig/magics.py decompyle/magics.py
+--- decompyle.orig/magics.py	2004-12-14 15:29:32.000000000 +0300
++++ decompyle/magics.py	2010-01-31 00:19:28.000000000 +0300
+@@ -19,6 +19,8 @@ versions = {
+     __build_magic(60202): '2.1',
+     __build_magic(60717): '2.2',
+     __build_magic(62011): '2.3',
++    __build_magic(62131): '2.5',
++    __build_magic(62161): '2.5',
+ }
+ 
+ magics = __by_version(versions)
+diff -rup decompyle.orig/marshal_files.py decompyle/marshal_files.py
+--- decompyle.orig/marshal_files.py	2004-12-14 15:29:32.000000000 +0300
++++ decompyle/marshal_files.py	2010-01-29 14:47:16.000000000 +0300
+@@ -9,6 +9,7 @@ by_version = {
+     '2.1': 'marshal_22',
+     '2.2': 'marshal_22',
+     '2.3': 'marshal_23',
++    '2.5': 'marshal',
+ }
+ 
+ by_magic = dict( [ (mag, by_version[ver])
+diff -rup decompyle.orig/verify.py decompyle/verify.py
+--- decompyle.orig/verify.py	2004-12-14 15:29:32.000000000 +0300
++++ decompyle/verify.py	2010-01-22 11:08:51.000000000 +0300
+@@ -133,7 +133,6 @@ def cmp_code_objects(version, code_obj1,
+ 			
+ 			# use changed Token class
+ 			#   we (re)set this here to save exception handling,
+-			#   which would get 'unübersichtlich'
+ 			scanner.setTokenClass(Token)
+ 			try:
+ 				# disassemble both code-objects
