@@ -1,0 +1,43 @@
+1. коннектимся на порт
+2. приложение в нас плюется mp3-шкой, где голосом говорят 4 цифры (каждый раз разные)
+3. распознаем цифры
+4. в виде числа отправляем обратно в сокет
+5. 100 Login successful
+6. "help" показывает возможные команды
+7. "quit" показывает код
+
+====================================================================
+
+LEO GmbH?
+100 Login successful
+
+<...skip...>
+
+help
+    start_engines          (start the engines)
+    hyperspace             (try to warp into hyperspace)
+    collide                (try to collide with asteriods)
+    avoid_imperial_troops  (try to avoid imperial troops)
+    help                   (this text)
+    version                (print version number)
+    quit                   (quit and shutdown engines)
+
+start_engines
+    310 Do or do not... there is no try.
+
+hyperspace
+    310 You collided with an asteriod. Too bad, but you are dead.
+
+collide
+    310 You succeed.
+
+avoid_imperial_troops
+    310 You have avoided the imperial fleet by colliding with an asteroid. You are now dead.
+
+
+version
+    310 0.3 alpha (you may lose your hand our your mechanical replacement
+
+quit
+    500 Strange game....the only winning move is not to play ;-)
+    cf2e6eSUBMIT_THIS,BITCH61be51564e65c82b8b
