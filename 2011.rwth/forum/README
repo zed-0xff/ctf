@@ -1,0 +1,3 @@
+do not change/comment out parts of the service functions. functions like file
+uploads, account creation and message exchange are used to deposit flags on
+the system.

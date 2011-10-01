@@ -1,0 +1,109 @@
+/*
+* {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid #abc;
+}
+*/	
+
+td{
+   padding: 5px;
+}
+
+.forms {
+	position: relative;
+	width: 620px;
+	border: 1px solid #777;
+}
+
+#first {
+	width: 140px;
+	padding: 5px;
+}
+
+input,textarea {
+	border: 1px solid #777;
+	width: 465px;
+	padding: 5px;
+}
+
+input.custom {
+	border: 1px solid #777;
+   width: 100px;
+	padding: 5px;
+}
+
+textarea {
+	height: 250px;
+}
+
+
+div.main,div.navmain {
+	position: relative;
+	min-width: 800px;
+	min-height: 500px;
+	/*
+	border: solid 2px red;
+	*/
+	padding: 0px;
+	margin: 20px;
+}
+
+div#mainnav {
+	min-width: 600px;
+	height: 32px;
+	left: 0px;
+	right: 0px;
+	top: 3px;
+	margin: 0px;
+	padding 0px;
+/*
+        border: solid 2px #000;
+ */
+}
+
+div#main > div#null {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	min-width: 240px;
+	height: 30px;
+	float: left;
+}
+
+div#sub > a,a#l,a#r {
+	display: block;
+	position: relative;
+	top: 0px;
+	max-width: 85px;
+	height: 20px;
+	border: solid 1px #aaa;
+	padding: 5px 10px;
+	text-decoration: none;
+	text-transform: capitalize;
+}
+
+div#sub > a#l {
+	float: left;
+	left: 0px;
+}
+
+div#sub > a#r {
+	float: right;
+	right: 0px;
+}
+
+div#sub > a:link {
+	text-decoration: none;
+  	background-color: #ddd;
+  	color:            blue;
+}
+
+div#sub > a:visited {
+} 
+div#sub > a:hover,a:active  {
+}
+
+div#clear {
+	clear: both;
+}
