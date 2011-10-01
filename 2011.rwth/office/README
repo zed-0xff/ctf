@@ -1,0 +1,29 @@
+Welcome to the readme of the OfficeApp beta.
+
+OfficeApp is the new way of doing all your office needs without having to
+install complex software on every of your minion machines. All they have
+to do is to connect to port 1234 on your server with the pre-installed
+program `telnet`. Then every feature ever needed in any proper office is
+available at your fingertips.
+
+-- Disclaimer
+Even though you paid a shitload of money for this software, we are not
+responsible for any damage done by this software. If you get hacked,
+your firewalls did everything wrong, or you hired the wrong guys. Your
+fault.
+
+-- Features
+* RPN calculator 
+	a great tool for all your oldschool engineers. Doing all your
+	callculation in rpn.
+* Infix calculator
+	If you're to dumb to use RPN formulars (which are superior in
+	every possible aspect) then you can use this as well (for
+	manager and secretaries)
+* Notes
+	Store all your work-related data in one place easily
+	(able to read, write and list your notes.) 
+
+-- Known Bugs:
+Server crashes after some time... need to figure out how the server
+can stay running forever

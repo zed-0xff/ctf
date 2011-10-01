@@ -1,0 +1,91 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 74 (0x4a)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: CN=rwthCTF CA, C=DE, ST=NRW, L=Aachen, O=RWTH IT Security Research Group, OU=rwthCTF/emailAddress=rwthCTF@itsec.rwth-aachen.de
+        Validity
+            Not Before: Sep 27 15:28:32 2011 GMT
+            Not After : Sep 26 15:28:32 2012 GMT
+        Subject: C=DE, ST=NRW, O=RWTH IT Security Research Group, OU=rwthCTF, CN=team77.ctf.itsec.rwth-aachen.de/emailAddress=team77@ctf.itsec.rwth-aachen.de
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (2048 bit)
+                Modulus (2048 bit):
+                    00:f6:31:ff:e3:e7:ef:c8:6e:3b:a4:01:4a:8f:b6:
+                    0a:3c:46:f1:05:d2:15:4e:c9:5c:78:c0:e7:46:25:
+                    f6:74:dc:38:22:b4:a2:5a:d8:3c:69:65:bb:a2:3d:
+                    35:af:80:11:db:b3:88:e0:b1:ef:5e:e9:87:f5:06:
+                    d4:16:0c:a7:6f:5b:ca:71:2b:33:7e:bc:94:ef:a2:
+                    77:30:e8:4e:92:4e:54:f6:bf:09:c0:07:94:3d:53:
+                    ec:f6:f0:1e:ab:64:53:c5:a6:4a:8e:0a:62:98:2d:
+                    34:be:dc:ea:48:d5:b7:c6:95:a5:a0:51:4b:0d:db:
+                    f4:32:92:fb:95:77:4e:64:e3:90:e3:79:03:48:c2:
+                    04:e6:89:39:8e:85:0a:ca:d1:33:7b:b3:80:b0:60:
+                    22:c7:25:2b:ed:77:a3:74:b0:9e:ad:5b:93:5f:2d:
+                    1b:50:ee:c6:f6:bf:6a:cf:fe:15:94:6f:98:44:0e:
+                    d3:8d:d0:81:32:24:67:08:05:55:3e:c6:ae:07:eb:
+                    23:2c:07:b1:72:bc:24:4a:af:2a:4c:da:f1:ee:e4:
+                    b8:11:22:3b:77:53:9a:8b:de:88:82:87:c1:7d:47:
+                    b5:ed:cf:2f:d7:36:d8:5c:15:be:3b:13:8e:3d:08:
+                    35:d9:65:30:84:5d:52:fa:17:8e:6a:28:1d:f1:aa:
+                    23:57
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                A6:95:13:5A:08:44:0C:0F:8C:BE:90:B1:92:59:09:37:AA:21:07:D4
+            X509v3 Authority Key Identifier: 
+                keyid:23:88:8C:C1:42:2D:BC:B8:25:C9:AB:5C:4A:95:3E:CE:C3:3E:F2:2C
+                DirName:/CN=rwthCTF CA/C=DE/ST=NRW/L=Aachen/O=RWTH IT Security Research Group/OU=rwthCTF/emailAddress=rwthCTF@itsec.rwth-aachen.de
+                serial:DB:D1:12:99:68:1C:07:65
+
+            Netscape CA Revocation Url: 
+                http://ctf.itsec.rwth-aachen.de/ca-crl.pem
+    Signature Algorithm: sha1WithRSAEncryption
+        39:ed:2c:33:03:64:62:b3:bc:68:28:f7:36:e1:46:55:7e:96:
+        de:4f:a2:6e:cf:90:e9:3d:d9:f8:1d:64:e9:36:4b:25:b3:e0:
+        2e:1e:74:ac:e8:62:df:df:f8:e0:16:8b:a0:15:c2:6c:2c:48:
+        10:f8:e7:9c:55:84:ee:95:4c:30:87:89:f3:8e:3e:76:0f:f7:
+        c2:2f:88:3b:f6:62:f6:86:ab:34:6d:c1:0d:11:d8:d9:b2:8a:
+        b7:b2:fe:ba:92:46:57:3c:a2:76:d6:06:ba:b5:a8:86:ce:ea:
+        d0:4f:fe:92:c9:4e:b9:3c:40:ce:12:d0:0e:8a:ee:a9:3e:e1:
+        51:5b:82:c3:42:bd:59:91:b0:b3:a5:fc:0d:50:47:63:67:be:
+        66:8a:78:6f:6d:68:7f:65:1a:49:19:ea:91:f4:82:0f:66:1b:
+        47:3a:b1:63:8d:dc:90:a6:d2:2d:d3:71:11:3e:64:d2:d7:f2:
+        2d:ea:04:ef:2f:c6:f8:f3:6a:4f:00:a2:5e:a6:ac:7e:a9:92:
+        01:82:1e:f7:a4:b5:36:c4:62:a3:d9:ea:5f:a7:97:49:7a:a4:
+        77:1f:83:58:0d:ce:41:3d:97:6d:ca:70:26:10:49:72:9d:31:
+        e7:b1:f9:c4:9e:d0:0a:86:08:06:ae:64:be:cd:36:21:1c:39:
+        bc:a3:b5:a7
+-----BEGIN CERTIFICATE-----
+MIIFJTCCBA2gAwIBAgIBSjANBgkqhkiG9w0BAQUFADCBqjETMBEGA1UEAxMKcnd0
+aENURiBDQTELMAkGA1UEBhMCREUxDDAKBgNVBAgTA05SVzEPMA0GA1UEBxMGQWFj
+aGVuMSgwJgYDVQQKEx9SV1RIIElUIFNlY3VyaXR5IFJlc2VhcmNoIEdyb3VwMRAw
+DgYDVQQLEwdyd3RoQ1RGMSswKQYJKoZIhvcNAQkBFhxyd3RoQ1RGQGl0c2VjLnJ3
+dGgtYWFjaGVuLmRlMB4XDTExMDkyNzE1MjgzMloXDTEyMDkyNjE1MjgzMlowgbEx
+CzAJBgNVBAYTAkRFMQwwCgYDVQQIEwNOUlcxKDAmBgNVBAoTH1JXVEggSVQgU2Vj
+dXJpdHkgUmVzZWFyY2ggR3JvdXAxEDAOBgNVBAsTB3J3dGhDVEYxKDAmBgNVBAMT
+H3RlYW03Ny5jdGYuaXRzZWMucnd0aC1hYWNoZW4uZGUxLjAsBgkqhkiG9w0BCQEW
+H3RlYW03N0BjdGYuaXRzZWMucnd0aC1hYWNoZW4uZGUwggEiMA0GCSqGSIb3DQEB
+AQUAA4IBDwAwggEKAoIBAQD2Mf/j5+/IbjukAUqPtgo8RvEF0hVOyVx4wOdGJfZ0
+3DgitKJa2DxpZbuiPTWvgBHbs4jgse9e6Yf1BtQWDKdvW8pxKzN+vJTvoncw6E6S
+TlT2vwnAB5Q9U+z28B6rZFPFpkqOCmKYLTS+3OpI1bfGlaWgUUsN2/QykvuVd05k
+45DjeQNIwgTmiTmOhQrK0TN7s4CwYCLHJSvtd6N0sJ6tW5NfLRtQ7sb2v2rP/hWU
+b5hEDtON0IEyJGcIBVU+xq4H6yMsB7FyvCRKrypM2vHu5LgRIjt3U5qL3oiCh8F9
+R7Xtzy/XNthcFb47E449CDXZZTCEXVL6F45qKB3xqiNXAgMBAAGjggFLMIIBRzAJ
+BgNVHRMEAjAAMB0GA1UdDgQWBBSmlRNaCEQMD4y+kLGSWQk3qiEH1DCB3wYDVR0j
+BIHXMIHUgBQjiIzBQi28uCXJq1xKlT7Owz7yLKGBsKSBrTCBqjETMBEGA1UEAxMK
+cnd0aENURiBDQTELMAkGA1UEBhMCREUxDDAKBgNVBAgTA05SVzEPMA0GA1UEBxMG
+QWFjaGVuMSgwJgYDVQQKEx9SV1RIIElUIFNlY3VyaXR5IFJlc2VhcmNoIEdyb3Vw
+MRAwDgYDVQQLEwdyd3RoQ1RGMSswKQYJKoZIhvcNAQkBFhxyd3RoQ1RGQGl0c2Vj
+LnJ3dGgtYWFjaGVuLmRlggkA29ESmWgcB2UwOQYJYIZIAYb4QgEEBCwWKmh0dHA6
+Ly9jdGYuaXRzZWMucnd0aC1hYWNoZW4uZGUvY2EtY3JsLnBlbTANBgkqhkiG9w0B
+AQUFAAOCAQEAOe0sMwNkYrO8aCj3NuFGVX6W3k+ibs+Q6T3Z+B1k6TZLJbPgLh50
+rOhi39/44BaLoBXCbCxIEPjnnFWE7pVMMIeJ844+dg/3wi+IO/Zi9oarNG3BDRHY
+2bKKt7L+upJGVzyidtYGurWohs7q0E/+kslOuTxAzhLQDoruqT7hUVuCw0K9WZGw
+s6X8DVBHY2e+Zop4b21of2UaSRnqkfSCD2YbRzqxY43ckKbSLdNxET5k0tfyLeoE
+7y/G+PNqTwCiXqasfqmSAYIe96S1NsRio9nqX6eXSXqkdx+DWA3OQT2XbcpwJhBJ
+cp0x57H5xJ7QCoYIBq5kvs02IRw5vKO1pw==
+-----END CERTIFICATE-----

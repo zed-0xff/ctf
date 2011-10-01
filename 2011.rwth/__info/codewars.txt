@@ -1,0 +1,159 @@
+Welcome to a new generation of CPUs!
+We run on 48 bits, using 4 registers, relative addressing, cyclic memory,
+and last but not least a customized instruction set.
+
+The Gentoo handbook told me once:
+1: READ EVERYTHING, don't skip around. don't skim the text, but do read the whole thing once to get an idea whats going on.
+2: Use your brain! Stop and think about what its saying.
+3: If you have a problem, try to solve it yourself.
+The same goes for you.
+
+The memory, (which will be called: board through this manual) will be
+initialized with 0s. Then the CPU will load the programs, and start them in
+an arbitrary order.
+
+The general layout of the supported instructions is:
+name_of_instruction destination source
+if you feel like it you can also write:
+name_of_instruction,destination,source;
+or even:
+name_of_instruction,,,,destination,,source;
+Well, you get the idea. I will only use the first version, because it uses
+less characters. Additionally, it is possible to write comments everything
+after a semicolon will be ignored:
+;Hi dear reader, I am a comment
+same goes for //
+//I am a comment, too!
+You can use the special comments:
+;name: $heregoesthenameofyourbot
+;desc: here goes some description of your bot, to provide your bot with meta information
+
+===Binary Layout===
+Every memory cell (read: "every memory word") consists of 3 parts:
+[op1] [op2] [cmd]
+  20    20      6  Bits
+While it is possible to use operands that are not needed by the instruction, it is
+considered bad style and will most probably result in unexpected crashes. Do not use
+additional operands for modifying additional values by means of post decrement/increment,
+because this would result in ugly code.
+
+=== Registers ===
+There are four general purpose registers.
+ptr - the pointer register
+acc - the accumulator register
+r1  - nameless register one
+r2  - nameless register two
+
+=== CPU flags ===
+There are three flags that will be set by the CPU:
+equal - will be set if the result of the last instruction was zero
+above - will be set if the result of the last instruction was >zero
+smaller - will be set if the result of the last instruction was <zero
+The flag will be set for every instruction where it makes sense ;) For example
+cmp, all arithmetic and logic operations
+
+=== Mov instructions ===
+mov dest src - move stuff from the source to the destination
+mvp val unused - move stuff to the ptr register
+mva val unused - move stuff to the acc register
+
+=== Logic operations ===
+xor dest src - dest xor src, the result will be saved to dest
+and dest src - dest and src, the result will be saved to dest
+or  dest src - dest or src, the result will be saved to dest
+not dest unused - binary not on destination, the result will be saved to dest
+
+=== Arithmetic operation ===
+dec dest unused - decrement destination, save the result to dest
+inc dest unused - increment destination, save the result to dest
+neg dest unused - negate destination, save the result to dest
+add dest src - add src to dest, the result will be saved to dest
+sub dest src - sub src from dest, the result will be saved to dest
+mul dest src - multiply dest and src, the result will be saved to dest
+div dest src - divide dest by src, the result will be saved to dest
+mod dest src - the remainder of the division dest/src, the result ...
+ica unused unused - increment acc
+dca unused unused - decrement acc
+ada val unused - same as add acc val
+sba val unused - same as sub acc val
+
+=== Jmp instructions ===
+jmp dest unused - continue execution at dest
+jie dest unused - jmp if equal
+jia dest unused - jmp if above
+jis dest unused - jmp if smaller
+jne dest unused - jmp if not equal
+jna dest unused - jmp if not above
+jns dest unused - jmp if not smaller
+
+=== Important and useful other stuff ===
+cmp src dest -compare the src and the destination, flags will be set
+splt dest unused - create a new thread at dest
+die unused unused - stop execution of this thread
+
+=== Interrupts ===
+The CPU has an interrupt vector containing three interrupts. The cpu has a hidden register containing the interrupt flags. If any of this flags is set, the cpu will jump to offset stored in the interrupt vector. If two or more interrupts are set, one instruction is executed in the first interrupt handler, than the next interrupt handler is called (you can use this instruction to disable the interrupt_enable flag). The interrupts are prioritised as following: First call Imem, then cza and finally cza.
+
+sti unused unused - enable interrupts
+cli unused unused - disable interrupts
+rti unused unused - return from interrupt (does not work recursively)
+
+The next instructions are used to set the interrupt vectors.
+If the dest is 0 this interrupt is disabled
+clk cycles dest - jumps to dest every #cycles, the #cycles must be >=4
+mem addr dest - jumps dest whenever addr is changed
+cza val dest -  jumps to dest if acc is equal to val
+
+=== Labels ===
+You can use labels to increase readability of your code.
+:label - everything after a ":" will be a label (only [a-z] are allowed for
+    labeling!
+jmp @label - will jump to label
+it is also possible to use @label in other context, just know that @label
+holds the relative addr of :label
+
+===Constants===
+$constant=42 - defines a constant, with name constant and value 42, you can
+now use it whenever needed (e.g. add ptr, $stepsize+2)
+
+===Parameters===
+
+a parameter looks like: /(*|**)?(number|register)[+\-]?/
+example: mov r1   **3-
+
+The binary layout of the parameters:
+[type][value_type][value][op]
+    2  1            16    2 Bit
+type: 01=> direct (*ptr)  10=>indirect(**ptr)  11=> immediate (ptr)  00=> invalid
+value_type: 1=>reg / 0=>constant value
+op: 01=>inc  10=>dec  11=>noop  00=> invalid
+
+===Debugging===
+While writing your code you can use two different tools:
+*Debugger
+  First of all, use `ruby debugger.rb $yourbot $otherbot` to visualise the behaviour of the bots.
+  This program is a graphical cpu emulator.
+  Commands:
+  * Space     - pauses/restarts emulation
+  * Arrows / hjkl - move the cursor (the value under the cursor is shown in the lower part of the screen)
+  * -/+     - increase/decrease the simulation speed
+  * q       - exit emulation
+  * n       - abort current simulation and restart
+  * s       - single step through emulation
+
+*Profiler
+  Then evaluate the efficiency of your bot with `ruby profiler.rb $yourbot $otherbot`.
+  This program will perform a huge number of games and tells you about the outcome.
+===Deploying===
+So you have written your Code, what now?
+
+You will have to send the code the the server. To do that you have to use the bot_add script.
+`ruby bot_add.rb $yourbot $server $username $password`
+The server the tests the performance of your bot. The results will be shown on http://$server/scores.html.
+
+===Setup===
+install Ruby (1.8 and 1.9 work)
+install ruby gems
+install the ncurses and the parallel gem
+(gem install ncurse && gem install parallel)
+=> everything should work now (note, ncurses seems to be buggy - even the samples don't work on some machines -_-)

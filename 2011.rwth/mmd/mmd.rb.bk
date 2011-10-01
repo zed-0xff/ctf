@@ -1,0 +1,142 @@
+#!/usr/bin/ruby1.8
+require 'rubygems'
+require 'sqlite3'
+require 'socket'
+
+DIGITS = 6
+MAXGAMES = 10
+
+def score(a,b)
+	r = 0
+	0.upto(a.length-1) do |i| r += 1 if a[i,1] == b[i,1] end
+	return r
+end
+
+class Server
+
+	def initialize(port,db)
+		@socks = []
+		@db = SQLite3::Database.new(db)
+		@server = TCPServer.open(port)
+		@socks << @server
+	end
+
+	def run
+		loop do
+			next if (res = select(@socks, nil, nil, nil)) == nil
+			for sock in res[0] do
+				if sock == @server then
+					accept
+				else
+					if sock.eof? then
+						disconnect(sock)
+					else
+						parse(sock)
+					end
+				end
+			end
+		end
+	end
+
+	private
+
+	def disconnect(client)
+		client.close
+		@socks.delete(client)
+	end
+
+	def send(client,m)
+		begin
+			client.puts m
+		rescue
+		end
+	end
+
+	def accept
+		client = @server.accept
+		@socks << client
+		send(client, "Greetings, Professor Falken.")
+		send(client, "How about a nice game of Mastermind?\n\n")
+		send(client, "list, play [id] [guess], new [reward], quit")
+	end
+
+	def parse(client)
+
+		l = client.gets
+
+		cmd, opts = l.chomp.strip.split(' ', 2)
+
+		if cmd == "new"
+
+			rows = @db.execute("SELECT COUNT() FROM Games WHERE solved=0")
+			if rows[0][0] > MAXGAMES
+				send(client, "Maximum number of unsolved games already reached.")
+				send(client, "Please solve those games first before creating new ones.")
+				return
+			end
+
+			secret = sprintf("%0#{DIGITS}d", rand(10**DIGITS))
+			@db.execute "INSERT INTO Games (secret,reward) VALUES (\"#{secret}\", \"#{opts}\")"
+			row = @db.execute("SELECT id FROM Games WHERE secret=\"#{secret}\" and reward=\"#{opts}\" LIMIT 1")
+			send(client, "Created game \"#{row[0][0]}\" with reward \"#{opts}\".")
+
+		elsif cmd == "play"
+
+			if opts == nil then
+				send(client, "Which game do you want to play?")
+				return
+			end
+
+			id, guess = opts.split ' ', 2
+
+			row = @db.execute("SELECT secret,reward FROM Games WHERE id=\"#{id}\"")
+			if row.first == nil then
+				send(client, "Game not found.")
+				return
+			end
+			secret, reward = row.first[0], row.first[1]
+
+			if guess == "" or guess == nil or guess.length != secret.length then
+				send(client, "Please give a valid guess (DIGITS=#{secret.length}).")
+				return
+			end
+
+			if (m = score(secret, guess)) == secret.length
+				send(client, "Congratulations, you solved game #{id}. Here is your reward: #{reward}.")
+				@db.execute("UPDATE Games SET solved=1 WHERE id=#{id}")
+			else
+				send(client, m)
+			end
+	
+		elsif cmd == "list"
+
+			if opts != nil
+				a, b = opts.split ' ', 2
+			end
+
+			if a == nil or b == nil
+				rows = @db.execute("SELECT id FROM Games WHERE solved=0")
+			else
+				rows = @db.execute("SELECT id FROM Games WHERE id >= \"#{a}\" AND id <= \"#{b}\" AND solved=0")
+			end
+
+			send(client, "Unsolved games: " + rows.join(", "))
+
+		elsif cmd == "quit"
+
+			send(client, "Goodbye.")
+			disconnect(client)
+			return
+
+		elsif cmd != nil
+
+			send(client, "Sorry, I don't understand you.")
+
+		end
+
+	end
+
+end
+
+s = Server.new(2323,"mmd.db")
+s.run
