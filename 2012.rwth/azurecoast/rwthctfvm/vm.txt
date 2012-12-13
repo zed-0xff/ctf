@@ -1,0 +1,33 @@
+4 byte instructions
+(some instructions may need the next slot)
+regs: acc, zer, ip, t1, t2
+
+target/src can be reg, [reg] or 8bit immediate
+opts
+arg1 00 => reg, 01 => [reg], 10 => 8bit immediate
+arg2 00 => reg, 01 => [reg], 10 => 8bit immediate
+
+[ldw, opts, target, nul] [value]
+
+[add, opts, target, src]
+[sub, opts, target, src]
+[mul, opts, target, src]
+[div, opts, target, src]
+[mod, opts, target, src]
+
+[and, opts, target, src]
+[or, opts, target, src]
+[not, opts, target, src] (target = !src)
+
+[mov, opts, target, src]
+[jmp, opts, offset     ]
+[jz,  opts, offset     ]
+[int, opts, arg1, arg2 ]
+
+syscalls
+read  fd, buffer
+write fd, buffer
+seek  fd, offset
+close fd
+open  path
+exec  cmdline, resbuffer
