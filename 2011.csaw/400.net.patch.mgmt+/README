@@ -1,0 +1,11 @@
+Debian OpenSSL vulnerability
+
+http://www.willhackforsushi.com/Home/Entries/2009/2/3_Decrypting_DebIan-Vulnerable_SSH_Traffic.html
+http://digitaloffense.net/tools/debian-openssl/
+http://seclists.org/pen-test/2008/Jul/50
+http://syscall.eu/
+http://www.ethicalhacker.net/content/view/265/1/
+
+required files:
+    debian_ssh_dsa_1024_x86.tar.bz2 (30M)
+    ssh_kex_keygen-1.1.tar.bz2 (2.5M)

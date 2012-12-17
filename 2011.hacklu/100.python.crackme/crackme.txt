@@ -1,0 +1,294 @@
+  3           0 LOAD_CONST               0 (-1)
+              3 LOAD_CONST               1 (None)
+              6 IMPORT_NAME              0 (sys)
+              9 STORE_NAME               0 (sys)
+
+  4          12 LOAD_CONST               0 (-1)
+             15 LOAD_CONST               1 (None)
+             18 IMPORT_NAME              1 (types)
+             21 STORE_NAME               1 (types)
+
+  7          24 LOAD_NAME                2 (len)
+             27 LOAD_NAME                0 (sys)
+             30 LOAD_ATTR                3 (argv)
+             33 CALL_FUNCTION            1
+             36 LOAD_CONST              28 (10)
+             39 COMPARE_OP               2 (==)
+             42 POP_JUMP_IF_TRUE        51
+             45 LOAD_GLOBAL              4 (AssertionError)
+             48 RAISE_VARARGS            1
+
+ 10     >>   51 BUILD_LIST               0
+             54 LOAD_NAME                0 (sys)
+             57 LOAD_ATTR                3 (argv)
+             60 LOAD_CONST               3 (1)
+             63 SLICE+1             
+             64 GET_ITER            
+        >>   65 FOR_ITER                18 (to 86)
+             68 STORE_NAME               5 (x)
+             71 LOAD_NAME                6 (int)
+             74 LOAD_NAME                5 (x)
+             77 CALL_FUNCTION            1
+             80 LIST_APPEND              2
+             83 JUMP_ABSOLUTE           65
+        >>   86 UNPACK_SEQUENCE          9
+             89 STORE_NAME               7 (a)
+             92 STORE_NAME               8 (b)
+             95 STORE_NAME               9 (c)
+             98 STORE_NAME              10 (d)
+            101 STORE_NAME              11 (e)
+            104 STORE_NAME              12 (f)
+            107 STORE_NAME              13 (g)
+            110 STORE_NAME              14 (h)
+            113 STORE_NAME              15 (i)
+
+ 13         116 LOAD_NAME                8 (b)
+            119 LOAD_NAME                9 (c)
+            122 COMPARE_OP               2 (==)
+            125 POP_JUMP_IF_TRUE       134
+            128 LOAD_GLOBAL              4 (AssertionError)
+            131 RAISE_VARARGS            1
+
+ 14     >>  134 LOAD_NAME                9 (c)
+            137 LOAD_NAME               13 (g)
+            140 COMPARE_OP               2 (==)
+            143 POP_JUMP_IF_TRUE       152
+            146 LOAD_GLOBAL              4 (AssertionError)
+            149 RAISE_VARARGS            1
+
+ 15     >>  152 LOAD_NAME               13 (g)
+            155 LOAD_NAME               14 (h)
+            158 COMPARE_OP               2 (==)
+            161 POP_JUMP_IF_TRUE       170
+            164 LOAD_GLOBAL              4 (AssertionError)
+            167 RAISE_VARARGS            1
+
+ 16     >>  170 LOAD_NAME               13 (g)
+            173 LOAD_NAME                8 (b)
+            176 BINARY_ADD          
+            177 LOAD_NAME                9 (c)
+            180 BINARY_ADD          
+            181 LOAD_CONST               4 (0)
+            184 COMPARE_OP               2 (==)
+            187 POP_JUMP_IF_TRUE       196
+            190 LOAD_GLOBAL              4 (AssertionError)
+            193 RAISE_VARARGS            1
+
+ 18     >>  196 LOAD_CONST               5 ('')
+            199 LOAD_ATTR               16 (join)
+            202 LOAD_CONST               6 (<code object <genexpr> at 0x107510930, file "crackme.py", line 18>)
+            205 MAKE_FUNCTION            0
+            208 LOAD_NAME                7 (a)
+            211 LOAD_NAME                8 (b)
+            214 LOAD_NAME                9 (c)
+            217 LOAD_NAME               10 (d)
+            220 LOAD_NAME               11 (e)
+            223 LOAD_NAME               12 (f)
+            226 LOAD_NAME               13 (g)
+            229 LOAD_NAME               14 (h)
+            232 LOAD_NAME               15 (i)
+            235 BUILD_LIST               9
+            238 GET_ITER            
+            239 CALL_FUNCTION            1
+            242 CALL_FUNCTION            1
+            245 STORE_NAME              17 (codestr)
+
+ 21         248 LOAD_CONST               5 ('')
+            251 STORE_NAME              18 (result)
+
+ 26         254 LOAD_CONST               7 (3)
+            257 LOAD_NAME                7 (a)
+            260 BINARY_MULTIPLY     
+            261 LOAD_CONST               8 (12)
+            264 LOAD_NAME               10 (d)
+            267 BINARY_MULTIPLY     
+            268 BINARY_ADD          
+            269 LOAD_NAME               11 (e)
+            272 BINARY_ADD          
+            273 LOAD_CONST               9 (4)
+            276 LOAD_NAME               12 (f)
+            279 BINARY_MULTIPLY     
+            280 BINARY_ADD          
+            281 LOAD_CONST              10 (6)
+            284 LOAD_NAME               15 (i)
+            287 BINARY_MULTIPLY     
+            288 BINARY_ADD          
+            289 LOAD_CONST              11 (2194)
+            292 COMPARE_OP               2 (==)
+            295 POP_JUMP_IF_TRUE       304
+            298 LOAD_GLOBAL              4 (AssertionError)
+            301 RAISE_VARARGS            1
+
+ 27     >>  304 LOAD_CONST              12 (-6)
+            307 LOAD_NAME                7 (a)
+            310 BINARY_MULTIPLY     
+            311 LOAD_CONST              13 (2)
+            314 LOAD_NAME               10 (d)
+            317 BINARY_MULTIPLY     
+            318 BINARY_ADD          
+            319 LOAD_CONST               9 (4)
+            322 LOAD_NAME               11 (e)
+            325 BINARY_MULTIPLY     
+            326 BINARY_SUBTRACT     
+            327 LOAD_NAME               12 (f)
+            330 BINARY_SUBTRACT     
+            331 LOAD_CONST               2 (9)
+            334 LOAD_NAME               15 (i)
+            337 BINARY_MULTIPLY     
+            338 BINARY_ADD          
+            339 LOAD_CONST              14 (-243)
+            342 COMPARE_OP               2 (==)
+            345 POP_JUMP_IF_TRUE       354
+            348 LOAD_GLOBAL              4 (AssertionError)
+            351 RAISE_VARARGS            1
+
+ 28     >>  354 LOAD_NAME                7 (a)
+            357 LOAD_CONST              10 (6)
+            360 LOAD_NAME               10 (d)
+            363 BINARY_MULTIPLY     
+            364 BINARY_ADD          
+            365 LOAD_CONST              13 (2)
+            368 LOAD_NAME               11 (e)
+            371 BINARY_MULTIPLY     
+            372 BINARY_ADD          
+            373 LOAD_CONST              15 (7)
+            376 LOAD_NAME               12 (f)
+            379 BINARY_MULTIPLY     
+            380 BINARY_ADD          
+            381 LOAD_CONST              16 (11)
+            384 LOAD_NAME               15 (i)
+            387 BINARY_MULTIPLY     
+            388 BINARY_ADD          
+            389 LOAD_CONST              17 (2307)
+            392 COMPARE_OP               2 (==)
+            395 POP_JUMP_IF_TRUE       404
+            398 LOAD_GLOBAL              4 (AssertionError)
+            401 RAISE_VARARGS            1
+
+ 29     >>  404 LOAD_CONST              18 (5)
+            407 LOAD_NAME                7 (a)
+            410 BINARY_MULTIPLY     
+            411 LOAD_CONST              13 (2)
+            414 LOAD_NAME               10 (d)
+            417 BINARY_MULTIPLY     
+            418 BINARY_SUBTRACT     
+            419 LOAD_CONST              15 (7)
+            422 LOAD_NAME               11 (e)
+            425 BINARY_MULTIPLY     
+            426 BINARY_SUBTRACT     
+            427 LOAD_CONST              19 (76)
+            430 LOAD_NAME               12 (f)
+            433 BINARY_MULTIPLY     
+            434 BINARY_ADD          
+            435 LOAD_CONST              20 (8)
+            438 LOAD_NAME               15 (i)
+            441 BINARY_MULTIPLY     
+            442 BINARY_ADD          
+            443 LOAD_CONST              21 (8238)
+            446 COMPARE_OP               2 (==)
+            449 POP_JUMP_IF_TRUE       458
+            452 LOAD_GLOBAL              4 (AssertionError)
+            455 RAISE_VARARGS            1
+
+ 30     >>  458 LOAD_CONST              13 (2)
+            461 LOAD_NAME                7 (a)
+            464 BINARY_MULTIPLY     
+            465 LOAD_CONST              13 (2)
+            468 LOAD_NAME               10 (d)
+            471 BINARY_MULTIPLY     
+            472 BINARY_SUBTRACT     
+            473 LOAD_CONST              13 (2)
+            476 LOAD_NAME               11 (e)
+            479 BINARY_MULTIPLY     
+            480 BINARY_SUBTRACT     
+            481 LOAD_CONST              13 (2)
+            484 LOAD_NAME               12 (f)
+            487 BINARY_MULTIPLY     
+            488 BINARY_SUBTRACT     
+            489 LOAD_CONST              13 (2)
+            492 LOAD_NAME               15 (i)
+            495 BINARY_MULTIPLY     
+            496 BINARY_ADD          
+            497 LOAD_CONST              22 (-72)
+            500 COMPARE_OP               2 (==)
+            503 POP_JUMP_IF_TRUE       512
+            506 LOAD_GLOBAL              4 (AssertionError)
+            509 RAISE_VARARGS            1
+
+ 35     >>  512 LOAD_CONST              23 (<code object xorc at 0x107510bb0, file "crackme.py", line 35>)
+            515 MAKE_FUNCTION            0
+            518 STORE_NAME              19 (xorc)
+
+ 39         521 LOAD_CONST              24 (<code object xorstr at 0x1075109b0, file "crackme.py", line 39>)
+            524 MAKE_FUNCTION            0
+            527 STORE_NAME              20 (xorstr)
+
+ 43         530 LOAD_NAME               18 (result)
+            533 LOAD_NAME               20 (xorstr)
+            536 LOAD_NAME               17 (codestr)
+            539 LOAD_CONST              25 ('\x0fp4$-\x064l?\x06 o!h\x17t3`\x10')
+            542 CALL_FUNCTION            2
+            545 INPLACE_ADD         
+            546 STORE_NAME              18 (result)
+
+ 46         549 LOAD_CONST              26 (<code object getSolutionAsParameterAndPrint at 0x107510a30, file "crackme.py", line 46>)
+            552 MAKE_FUNCTION            0
+            555 STORE_NAME              21 (getSolutionAsParameterAndPrint)
+
+ 50         558 LOAD_NAME               21 (getSolutionAsParameterAndPrint)
+            561 LOAD_ATTR               22 (func_code)
+            564 STORE_NAME              23 (recycled_code)
+
+ 51         567 LOAD_NAME                1 (types)
+            570 LOAD_ATTR               24 (CodeType)
+            573 LOAD_NAME               23 (recycled_code)
+            576 LOAD_ATTR               25 (co_argcount)
+            579 LOAD_NAME               23 (recycled_code)
+            582 LOAD_ATTR               26 (co_nlocals)
+            585 LOAD_NAME               23 (recycled_code)
+            588 LOAD_ATTR               27 (co_stacksize)
+
+ 52         591 LOAD_NAME               23 (recycled_code)
+            594 LOAD_ATTR               28 (co_flags)
+            597 LOAD_NAME               17 (codestr)
+            600 LOAD_NAME               23 (recycled_code)
+            603 LOAD_ATTR               29 (co_consts)
+            606 LOAD_NAME               23 (recycled_code)
+            609 LOAD_ATTR               30 (co_names)
+
+ 53         612 LOAD_NAME               23 (recycled_code)
+            615 LOAD_ATTR               31 (co_varnames)
+            618 LOAD_NAME               23 (recycled_code)
+            621 LOAD_ATTR               32 (co_filename)
+            624 LOAD_NAME               23 (recycled_code)
+            627 LOAD_ATTR               33 (co_name)
+
+ 54         630 LOAD_NAME               23 (recycled_code)
+            633 LOAD_ATTR               34 (co_firstlineno)
+            636 LOAD_NAME               23 (recycled_code)
+            639 LOAD_ATTR               35 (co_lnotab)
+
+ 55         642 LOAD_NAME               23 (recycled_code)
+            645 LOAD_ATTR               36 (co_freevars)
+            648 LOAD_NAME               23 (recycled_code)
+            651 LOAD_ATTR               37 (co_cellvars)
+            654 CALL_FUNCTION           14
+            657 STORE_NAME              38 (new_code)
+
+ 58         660 LOAD_NAME                1 (types)
+            663 LOAD_ATTR               39 (FunctionType)
+            666 LOAD_NAME               38 (new_code)
+            669 LOAD_NAME               40 (globals)
+            672 CALL_FUNCTION            0
+            675 LOAD_CONST              27 ('keepOnDigging')
+            678 LOAD_NAME               21 (getSolutionAsParameterAndPrint)
+            681 LOAD_ATTR               41 (func_defaults)
+            684 CALL_FUNCTION            4
+            687 STORE_NAME              42 (new_fun)
+
+ 60         690 LOAD_NAME               42 (new_fun)
+            693 LOAD_NAME               18 (result)
+            696 CALL_FUNCTION            1
+            699 POP_TOP             
+            700 LOAD_CONST               1 (None)
+            703 RETURN_VALUE 
