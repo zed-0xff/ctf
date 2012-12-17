@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+# hilbert binary uses following url for its data:
+# http://api.qrserver.com/v1/create-qr-code/?size=25x25&margin=0&data=00000000000000000000000000000000
+# where "00000000000000000000000000000000" is an argument given to binary
+
+# put into /etc/hosts:
+# 127.0.0.1   api.qrserver.com
+
+# and start faker!
+
+def gen_for_coord x,y
+  fname = ("%05dx%05d" % [x,y]).rjust(32,"0")
+  puts fname
+  Dir.mkdir "data" unless Dir.exist?("data")
+  system "./1.first_hint #{fname} > data/#{fname}"
+end
+
+if ARGV.size == 2
+  gen_for_coord *ARGV.map(&:to_i)
+  exit
+end
+
+ARGV[0].to_i.upto(25) do |x|
+  25.times do |y|
+    gen_for_coord x,y
+  end
+end
