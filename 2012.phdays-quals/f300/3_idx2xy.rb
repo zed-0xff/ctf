@@ -4,7 +4,7 @@ require 'yaml'
 h = {}
 
 Dir["data/0000*x*"].each do |fname|
-  x,y = fname.split('x').map(&:to_i)
+  x,y = File.basename(fname).split('x').map(&:to_i)
   data = File.read(fname)
   idx = nil
   data.strip.each_line do |line|
@@ -14,11 +14,14 @@ Dir["data/0000*x*"].each do |fname|
       idx = a.last
     end
   end
-  raise "no idx in #{fname}" unless idx
-  raise if h[idx]
-  h[idx] = [x,y]
+  if idx
+    raise if h[idx]
+    h[idx] = [x,y]
+  else
+    puts "[?] no idx in #{fname}"
+  end
 end
 
-File.open("idx2xy.yml","w") do |f|
+File.open("4_idx2xy.yml","w") do |f|
   f << h.to_yaml
 end

@@ -23,7 +23,7 @@ if ARGV.size == 2
   exit
 end
 
-ARGV[0].to_i.upto(25) do |x|
+ARGV[0].to_i.upto(24) do |x|
   25.times do |y|
     gen_for_coord x,y
   end
