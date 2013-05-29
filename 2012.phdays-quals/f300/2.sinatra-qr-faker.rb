@@ -6,8 +6,11 @@ include ZPNG
 # generates PNG image, 25x25, white background and ONE pixel set,
 # coord of pixel given by 'data' param: "?data=4x5": x=4, y=5
 
-# put into /etc/hosts:
+# 1. put into /etc/hosts:
 # 127.0.0.1   api.qrserver.com
+
+# 2. run this file AS ROOT b/c it should listen on port 80
+# ./2.sinatra-qr-faker.rb -p 80
 
 get '/v1/create-qr-code/' do
   content_type 'image/png'

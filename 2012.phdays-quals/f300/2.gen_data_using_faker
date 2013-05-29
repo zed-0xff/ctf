@@ -13,7 +13,9 @@ def gen_for_coord x,y
   fname = ("%05dx%05d" % [x,y]).rjust(32,"0")
   puts fname
   Dir.mkdir "data" unless Dir.exist?("data")
-  system "./1.first_hint #{fname} > data/#{fname}"
+  cmd = "./1.first_hint #{fname} > data/#{fname}"
+  system cmd
+  raise "error executing #{cmd.inspect}" unless $?.success?
 end
 
 if ARGV.size == 2
