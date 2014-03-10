@@ -1,0 +1,30 @@
+task: find an md5 digest of the biggest file from harm.dat of harm0597 discmag
+
+Prerequisites
+-------------
+ 1. find harm0597.zip
+ 2. unpack harm.exe with cup386
+ 3. fix Runtime Error 200 with crtfix16.zip
+
+Facts
+-------------
+ 1. biggest file is a "trx-drnk.rus"
+ 2. "Runtime Error 103" is a joke, just wait
+
+Solution #1
+-------------
+ 1. get DosBox
+ 2. run harm.exe
+ 3. open Articles/TRX Gathering Report
+ 4. dump DosBox memory ( linux / win7 = OK; OSX - ? )
+ 5. find article body in dump, carefully guessing its start/end
+ 6. calculate md5
+
+Solution #2
+-------------
+ 1. get IDA + DosBox with integrated debugger
+ 2. identify unpacking function
+ 3. breakpoint it
+ 4. catch a moment when "trx-drnk.rus" is being loaded
+ 5. dump it just after it's been unpacked
+ 6. calculate md5

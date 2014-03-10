@@ -1,0 +1,31 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 02C1FH 02C20H seg1A2             CODE
+ 02C20H 02C2FH 00010H seg001             CODE
+ 02C30H 030EFH 004C0H seg002             CODE
+ 030F0H 033BFH 002D0H seg003             CODE
+ 033C0H 03D9FH 009E0H seg004             CODE
+ 03DA0H 03F5FH 001C0H seg005             CODE
+ 03F60H 03F9FH 00040H seg006             CODE
+ 03FA0H 045EFH 00650H seg59C             CODE
+ 045F0H 058BFH 012D0H seg601             CODE
+ 058C0H 05BDFH 00320H seg009             CODE
+ 05BE0H 063BFH 007E0H seg010             CODE
+ 063C0H 06E4FH 00A90H seg011             CODE
+ 06E50H 0746FH 00620H seg012             CODE
+ 07470H 0757FH 00110H seg013             CODE
+ 07580H 088BFH 01340H seg8FA             CODE
+ 088C0H 1885FH 0FFA0H dseg               DATA
+ 18860H 1C85FH 04000H seg016             STACK
+
+
+  Address         Publics by Value
+
+ 03FA:028C       load_file?
+ 03FA:0301       uncompressed
+ 03FA:0329       compressed
+ 045F:0027       decompress?
+ 088C:4AAC       file_mode
+
+Program entry point at 0000:239A
